@@ -1,14 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../components/shared/Footer/Footer";
+import NavbarComponent from "../components/shared/Navbar/NavbarComponent";
+
+
 
 
 const MainLayout = () => {
   return (
     <div>
       <header>
-        <h3 className="text-xl">nabbar</h3>
+        <NavbarComponent />
       </header>
-      <main>
+      <main className="min-h-[calc(100vh-353px)]">
         <Outlet />
       </main>
       <footer>
