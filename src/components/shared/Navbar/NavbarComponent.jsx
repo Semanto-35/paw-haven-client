@@ -4,11 +4,12 @@ import { Navbar, Button, Menu, MenuHandler, MenuList, MenuItem, Avatar, ListItem
 import { Bars3Icon, XMarkIcon, IdentificationIcon } from "@heroicons/react/24/outline";
 import { HomeIcon, LifebuoyIcon, WalletIcon, PowerIcon } from "@heroicons/react/24/solid";
 import userImg from '../../../assets/icons/user.jpg';
+import useAuth from "../../../hooks/useAuth";
 
 
 
 const NavbarComponent = () => {
-  const user = 'gh'
+  const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
 
 
@@ -105,7 +106,7 @@ const NavbarComponent = () => {
                     </Typography>
                   </MenuItem>
                   <MenuItem
-                    onClick={() => console.log("user log out")}
+                    onClick={logOut}
                     className="flex items-center gap-2 text-red-500"
                   >
                     <PowerIcon className="w-4 h-4" />
@@ -123,9 +124,9 @@ const NavbarComponent = () => {
                   LogIn
                 </Button>
               </Link>
-              <Link to="/register">
+              <Link to="/signUp">
                 <Button variant="gradient" size="sm">
-                  Register
+                  Sign Up
                 </Button>
               </Link>
             </div>
@@ -191,7 +192,7 @@ const NavbarComponent = () => {
                   </Typography>
                 </ListItem>
                 <Button
-                  onClick={() => console.log("user log out")}
+                  onClick={logOut}
                   className="mt-4 flex items-center gap-2"
                   variant="text"
                   size="md"
@@ -208,9 +209,9 @@ const NavbarComponent = () => {
                     LogIn
                   </Button>
                 </Link>
-                <Link to="/register" className="w-1/2">
+                <Link to="/signUp" className="w-1/2">
                   <Button variant="gradient" size="sm" fullWidth>
-                    Register
+                    Sign Up
                   </Button>
                 </Link>
               </div>
