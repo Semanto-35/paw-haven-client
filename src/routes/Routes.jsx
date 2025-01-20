@@ -5,6 +5,7 @@ import PetListing from "../pages/PetListing/PetListing";
 import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 
 
@@ -33,7 +34,16 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
-  }
+  },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      {
+        
+      }
+    ]
+  },
 ])
 
 export default router;

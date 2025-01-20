@@ -8,6 +8,7 @@ import { Input, Select, Typography, Option, Button, Card, CardHeader, CardBody, 
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 
 const PetListing = () => {
@@ -131,9 +132,11 @@ const PetListing = () => {
                   </Typography>
                 </CardBody>
                 <CardFooter className="pt-3">
-                  <Button size="md" fullWidth>
-                    see details
-                  </Button>
+                  <Link to={`/pets/${pet._id}`}>
+                    <Button size="md" fullWidth>
+                      see details
+                    </Button>
+                  </Link>
                 </CardFooter>
               </Card>
             ))

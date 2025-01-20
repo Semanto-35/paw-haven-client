@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Navbar, Button, Menu, MenuHandler, MenuList, MenuItem, Avatar, ListItem, Typography, List, IconButton, Collapse, } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon, IdentificationIcon } from "@heroicons/react/24/outline";
 import { HomeIcon, LifebuoyIcon, WalletIcon, PowerIcon } from "@heroicons/react/24/solid";
@@ -11,7 +11,7 @@ import useAuth from "../../../hooks/useAuth";
 const NavbarComponent = () => {
   const { user, logOut } = useAuth();
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
 
   const links = <>
     <NavLink
@@ -97,7 +97,7 @@ const NavbarComponent = () => {
                   </div>
                   <hr className="my-1" />
                   <MenuItem
-                    onClick={() => console.log("Go to dashboard")}
+                    onClick={() => navigate('/dashboard')}
                     className="flex items-center gap-2 text-blue-gray-900"
                   >
                     <IdentificationIcon className="w-4 h-4" />
@@ -184,7 +184,7 @@ const NavbarComponent = () => {
           {
             user ? (
               <div className="w-full pb-4">
-                <ListItem className="flex items-center gap-1 py-2 pr-4" onClick={() => console.log("Go to dashboard")}
+                <ListItem className="flex items-center gap-1 py-2 pr-4" onClick={() => navigate('/dashboard')}
                 >
                   <IdentificationIcon className='w-5 h-5' />
                   <Typography variant="small" className="font-medium">
