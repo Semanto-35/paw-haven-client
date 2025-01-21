@@ -105,8 +105,8 @@ const PetListing = () => {
               <Card key={pet._id} className="w-full shadow-lg">
                 <CardHeader floated={false} color="blue-gray">
                   <motion.img
-                    src={pet.image}
-                    alt="ui/ux review check"
+                    src={pet.petImage}
+                    alt={pet.petName}
                     className="w-full h-48 lg:h-60 object-cover"
                     whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}
                   />
@@ -114,13 +114,13 @@ const PetListing = () => {
                 <CardBody>
                   <div className="mb-3 flex items-center justify-between">
                     <Typography variant="h4" color="blue-gray" className="font-medium">
-                      {pet.name}
+                      {pet.petName}
                     </Typography>
                     <Typography
                       color="blue-gray"
                       className="flex items-center gap-1.5 font-normal"
                     >
-                      {pet.age} old
+                      {pet.petAge < 1 ? `${Math.round(pet.petAge * 10)} months` : `${pet.petAge} years`}
                     </Typography>
                   </div>
                   <Typography
@@ -128,7 +128,7 @@ const PetListing = () => {
                     className="flex items-center gap-1.5 font-normal"
                   >
                     <MapPinIcon className="w-6 h-6" />
-                    {pet.location}
+                    {pet.petLocation}
                   </Typography>
                 </CardBody>
                 <CardFooter className="pt-3">

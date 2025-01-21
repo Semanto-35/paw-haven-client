@@ -6,6 +6,8 @@ import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import DashboardLayout from "../layouts/DashboardLayout";
+import PrivateRoute from "./PrivateRoute";
+import AddPet from "../pages/Dashboard/UserDashboard/AddPet/AddPet";
 
 
 
@@ -37,11 +39,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       {
-        
-      }
+        path: '/dashboard/add-pet',
+        element: <PrivateRoute><AddPet /></PrivateRoute>
+      },
     ]
   },
 ])

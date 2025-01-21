@@ -21,7 +21,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useRole from "../../../../hooks/useRole";
 
@@ -130,7 +130,7 @@ const Sidebar = () => {
             </ListItem>
           </NavLink>
           <NavLink
-            to="/dashboard/my-donations"
+            to="/dashboard/my-donation-campaigns"
             className={({ isActive }) =>
               isActive
                 ? " text-blue-500 font-medium"
@@ -162,7 +162,7 @@ const Sidebar = () => {
           <hr className="my-2 border-blue-gray-300" />
           <div>
             <NavLink
-              to="/dashboard/my-donations"
+              to="/dashboard/profile"
               className={({ isActive }) =>
                 isActive
                   ? " text-blue-500 font-medium"
