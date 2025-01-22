@@ -15,17 +15,27 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../../../components/shared/Loader/Loader";
 
 
-
-const AddPetForm = () => {
+const UpdatePet = () => {
+  const { id } = useParams();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const quillRef = useRef(null);
   const navigate = useNavigate();
+  const { data: petData, isLoading, error } = useQuery({
+    queryKey: ["petData", id],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/pets/${id}`);
+      return data;
+    },
+  });
+
   const petCategories = [
     { value: "Dogs", label: "Dogs" },
     { value: "Cats", label: "Cats" },
@@ -34,15 +44,20 @@ const AddPetForm = () => {
     { value: "Fish", label: "Fish" },
   ];
 
+  
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      petName: "",
-      petAge: "",
-      petCategory: null,
-      petLocation: "",
-      shortDescription: "",
-      petImage: null,
-      longDescription: "",
+      petName: petData?.petName || '',
+      petAge: petData?.petAge || 0,
+      petCategory: petData?.petCategory
+        ? { value: petData.petCategory, label: petData.petCategory }
+        : null,
+      petLocation: petData?.petLocation || '',
+      shortDescription: petData?.shortDescription,
+      petImage: petData?.petImage || null,
+      longDescription: petData?.longDescription || '',
     },
     validationSchema: Yup.object({
       petName: Yup.string()
@@ -74,7 +89,7 @@ const AddPetForm = () => {
         const petImageURL = await imageUpload(values.petImage);
         const text = quillRef.current?.getEditor().getText();
 
-         await axiosSecure.post(`/add-pet`, {
+        const updateData = {
           ...values,
           petImage: petImageURL,
           petCategory: values.petCategory.label,
@@ -82,8 +97,10 @@ const AddPetForm = () => {
           dateAdded: new Date().toISOString(),
           longDescription: text,
           addedBy: user?.email,
-        });
-        toast.success("Pet added successfully!");
+        }
+
+        await axiosSecure.put(`/update-pet/${id}`, updateData);
+        toast.success("Pet updated successfully!");
         formik.resetForm();
         navigate('/dashboard/my-added-pets')
       } catch (error) {
@@ -93,15 +110,19 @@ const AddPetForm = () => {
     },
   });
 
-
+  if (isLoading) return <Loader />;
+  if (error) {
+    console.error("Error fetching pet data:", error);
+    return <Typography color="red">Failed to fetch pet details.</Typography>;
+  }
 
   return (
     <Card className="max-w-3xl mx-auto p-4 shadow-lg">
       <Typography variant="h3" className="text-center mb-2">
-        Add a Pet
+        Give <span className="text-orange-600">{petData.petName}</span> a Update
       </Typography>
       <Typography variant="paragraph" className="text-center mb-4">
-        Help a Pet to be adopted by giving it's details below.
+        Help me to be adopted by giving it's updated details below.
       </Typography>
       <CardBody>
         <form onSubmit={formik.handleSubmit}>
@@ -243,11 +264,11 @@ const AddPetForm = () => {
       </CardBody>
       <CardFooter>
         <Typography variant="small" className="text-gray-500">
-          Fill out the form to add your pet to the adoption platform.
+        Update the form to provide new details for your pet.
         </Typography>
       </CardFooter>
     </Card>
   );
 };
 
-export default AddPetForm;
+export default UpdatePet;

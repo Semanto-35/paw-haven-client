@@ -8,6 +8,8 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import DashboardLayout from "../layouts/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import AddPet from "../pages/Dashboard/UserDashboard/AddPet/AddPet";
+import MyAddedpets from "../pages/Dashboard/UserDashboard/MyAddedPets/MyAddedpets";
+import UpdatePet from "../pages/Dashboard/UserDashboard/UpdatePet/UpdatePet";
 
 
 
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/add-pet',
         element: <PrivateRoute><AddPet /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/my-added-pets',
+        element: <PrivateRoute><MyAddedpets /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/update-pet/:id',
+        element: <PrivateRoute><UpdatePet /></PrivateRoute>
       },
     ]
   },
