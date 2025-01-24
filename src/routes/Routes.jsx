@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import AddPet from "../pages/Dashboard/UserDashboard/AddPet/AddPet";
 import MyAddedpets from "../pages/Dashboard/UserDashboard/MyAddedPets/MyAddedpets";
 import UpdatePet from "../pages/Dashboard/UserDashboard/UpdatePet/UpdatePet";
+import CreateDonationCampaign from "../pages/Dashboard/UserDashboard/CreateDonation/CreateDonationCampaign";
+import MyDonationCampaigns from "../pages/Dashboard/UserDashboard/MyCampaigns/MyDonationCampaigns";
 
 
 
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/update-pet/:id',
         element: <PrivateRoute><UpdatePet /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/create-donation',
+        element: <PrivateRoute><CreateDonationCampaign /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/my-donation-campaigns',
+        element: <PrivateRoute><MyDonationCampaigns /></PrivateRoute>
       },
     ]
   },

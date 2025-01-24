@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
@@ -19,7 +19,6 @@ import { TrashIcon, PencilIcon, CheckIcon } from "@heroicons/react/24/solid";
 
 const MyAddedPets = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const [sorting, setSorting] = useState([]);
