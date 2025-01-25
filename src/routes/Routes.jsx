@@ -12,6 +12,9 @@ import MyAddedpets from "../pages/Dashboard/UserDashboard/MyAddedPets/MyAddedpet
 import UpdatePet from "../pages/Dashboard/UserDashboard/UpdatePet/UpdatePet";
 import CreateDonationCampaign from "../pages/Dashboard/UserDashboard/CreateDonation/CreateDonationCampaign";
 import MyDonationCampaigns from "../pages/Dashboard/UserDashboard/MyCampaigns/MyDonationCampaigns";
+import EditDonation from "../pages/Dashboard/UserDashboard/EditDonation/EditDonation";
+import MyDonations from "../pages/Dashboard/UserDashboard/MyDonations/MyDonations";
+import AdoptionRequests from "../pages/Dashboard/UserDashboard/AdoptionRequests/AdoptionRequests";
 
 
 
@@ -64,6 +67,18 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/my-donation-campaigns',
         element: <PrivateRoute><MyDonationCampaigns /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/update-campaign/:id',
+        element: <PrivateRoute><EditDonation /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/my-donations',
+        element: <PrivateRoute><MyDonations /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/adoption-requests',
+        element: <PrivateRoute><AdoptionRequests /></PrivateRoute>
       },
     ]
   },

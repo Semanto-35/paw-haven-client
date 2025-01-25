@@ -198,7 +198,7 @@ const MyDonationCampaigns = () => {
       <Dialog open={open} onClose={() => setOpen(false)} size="md">
         <DialogHeader>Donators List</DialogHeader>
         <DialogBody divider>
-          {isLoading ? (
+          {isPending ? (
             <Typography>Loading donators...</Typography>
           ) : isSuccess && donators.length > 0 ? (
             <ul>

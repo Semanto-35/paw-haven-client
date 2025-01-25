@@ -122,7 +122,7 @@ const UpdatePet = () => {
         Give <span className="text-orange-600">{petData.petName}</span> a Update
       </Typography>
       <Typography variant="paragraph" className="text-center mb-4">
-        Help me to be adopted by giving it's updated details below.
+        Help me to be adopted by giving it&apos;s updated details below.
       </Typography>
       <CardBody>
         <form onSubmit={formik.handleSubmit}>
