@@ -1,155 +1,101 @@
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table";
-import Swal from "sweetalert2";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Loader from "../../../../components/shared/Loader/Loader";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import Loader from "../../../../components/shared/Loader/Loader";
-import {
-  Button,
-  Card,
-  CardBody,
-  Typography,
-  IconButton,
-  Tooltip,
-  Chip,
-} from "@material-tailwind/react";
-import { TrashIcon, PencilIcon, CheckIcon } from "@heroicons/react/24/solid";
+import { getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
+import { Button, Card, CardBody, Tooltip, Typography } from "@material-tailwind/react";
+import Swal from "sweetalert2";
 
-const MyAddedPets = () => {
+
+const ManageUsers = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  const [sorting, setSorting] = useState([]);
 
-  const { data: pets, isLoading, error } = useQuery({
-    queryKey: ["pets", user?.email],
+  const { data: users, isLoading, error } = useQuery({
+    queryKey: ["users", user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/all-pets/${user?.email}`);
+      const { data } = await axiosSecure.get(`/all-users/${user?.email}`);
       return data;
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.delete(`/pet/${petId}`),
+  const makeAdminMutation = useMutation({
+    mutationFn: (id) => axiosSecure.patch(`/user/role/${id}`),
     onSuccess: () => {
-      queryClient.invalidateQueries(["pets"]);
-      Swal.fire("Deleted!", "The pet has been deleted.", "success");
+      queryClient.invalidateQueries(["users"]);
+      Swal.fire("Success", "User promoted to admin successfully.", "success");
     },
     onError: () => {
-      Swal.fire("Error!", "Failed to delete the pet.", "error");
+      Swal.fire("Error!", "Failed to promote user to admin.", "error");
     },
   });
 
-  const adoptMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.patch(`/pet/${petId}`),
+  const banUserMutation = useMutation({
+    mutationFn: (id) => axiosSecure.patch(`/user/ban/${id}`),
     onSuccess: () => {
-      queryClient.invalidateQueries(["pets"]);
-      Swal.fire("Adopted!", "The pet has been marked as adopted.", "success");
+      queryClient.invalidateQueries(["users"]);
+      Swal.fire("Success", "User has been banned.", "success");
     },
     onError: () => {
-      Swal.fire("Error!", "Failed to update the adoption status.", "error");
+      Swal.fire("Error!", "Failed to ban a user.", "error");
     },
   });
 
-  const handleDelete = (petId) => {
-    Swal.fire({
-      title: "Are you sure to delete?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteMutation.mutate(petId);
-      }
-    });
-  };
-
-  const handleAdopt = (petId) => {
-    adoptMutation.mutate(petId);
-  };
 
   const columns = [
     {
-      accessorKey: "index",
-      header: "S/N",
-      cell: (info) => info.row.index + 1,
-    },
-    {
-      accessorKey: "petName",
-      header: "Pet Name",
-      cell: ({ row }) => (
-        <Typography variant="small" className="font-medium">
-          {row.original.petName}
-        </Typography>
-      ),
-    },
-    {
-      accessorKey: "petCategory",
-      header: "Category",
-      cell: ({ row }) => (
-        <Typography variant="small" className="font-medium">
-          {row.original.petCategory}
-        </Typography>
-      ),
-    },
-    {
-      accessorKey: "petImage",
-      header: "Image",
+      accessorKey: "image",
+      header: "Profile Picture",
       cell: ({ row }) => (
         <img
-          src={row.original.petImage}
+          src={row.original.image}
           alt="Pet"
-          className="w-16 h-16 object-cover rounded-lg"
+          className="h-12 w-12 rounded-full object-cover"
         />
       ),
     },
     {
-      accessorKey: "adopted",
-      header: "Adoption Status",
+      accessorKey: "name",
+      header: "Name",
       cell: ({ row }) => (
-        <Chip
-          size="lg"
-          value={`${row.original.adopted ? "Adopted" : "Not Adopted"}`}
-          color={`${row.original.adopted ? "green" : "pink"}`}
-        />
+        <Typography variant="small" className="font-medium">
+          {row.original.name}
+        </Typography>
+      ),
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+      cell: ({ row }) => (
+        <Typography variant="small" className="font-medium">
+          {row.original.email}
+        </Typography>
       ),
     },
     {
       header: "Actions",
       cell: ({ row }) => (
-        <div className="flex justify-evenly gap-2">
-          <Tooltip content="Update Pet">
-            <Link to={`/dashboard/update-pet/${row.original._id}`}>
-              <IconButton
-                variant="outlined"
-                color="blue"
-              >
-                <PencilIcon className="h-5 w-5" />
-              </IconButton>
-            </Link>
-          </Tooltip>
-          <Tooltip content="Delete Pet">
-            <IconButton
-              variant="outlined"
-              color="red"
-              onClick={() => handleDelete(row.original._id)}
-            >
-              <TrashIcon className="h-5 w-5" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip content="Mark as Adopted">
-            <IconButton
-              variant="outlined"
+        <div className="flex gap-2">
+          <Tooltip content="Make Admin">
+            <Button
+              size="sm"
               color="green"
-              onClick={() => handleAdopt(row.original._id)}
+              onClick={() => makeAdminMutation.mutate(row.original._id)}
+              disabled={row.original.role === "admin"}
             >
-              <CheckIcon className="h-5 w-5" />
-            </IconButton>
+              {row.original.role === "admin" ? "Admin" : "Admin"}
+            </Button>
+          </Tooltip>
+          <Tooltip content="Ban User">
+            <Button
+              size="sm"
+              color="red"
+              onClick={() => banUserMutation.mutate(row.original._id)}
+              disabled={row.original?.isBanned}
+            >
+              {row.original?.isBanned ? "Banned" : "Ban"}
+            </Button>
           </Tooltip>
         </div>
       ),
@@ -157,20 +103,15 @@ const MyAddedPets = () => {
   ];
 
   const table = useReactTable({
-    data: pets || [],
+    data: users,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onSortingChange: setSorting,
-    state: { sorting },
     initialState: { pagination: { pageSize: 10 } },
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader />
   if (error) return <Typography color="red">Error: {error.message}</Typography>;
-
-
 
 
   return (
@@ -223,7 +164,7 @@ const MyAddedPets = () => {
                       colSpan={table.getVisibleFlatColumns().length}
                       className="text-center py-4 text-gray-500"
                     >
-                      No Results Found
+                      No users Found.
                     </td>
                   </tr>
                 )}
@@ -258,4 +199,4 @@ const MyAddedPets = () => {
   );
 };
 
-export default MyAddedPets;
+export default ManageUsers;

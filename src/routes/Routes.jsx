@@ -15,6 +15,8 @@ import MyDonationCampaigns from "../pages/Dashboard/UserDashboard/MyCampaigns/My
 import EditDonation from "../pages/Dashboard/UserDashboard/EditDonation/EditDonation";
 import MyDonations from "../pages/Dashboard/UserDashboard/MyDonations/MyDonations";
 import AdoptionRequests from "../pages/Dashboard/UserDashboard/AdoptionRequests/AdoptionRequests";
+import AdminRoute from "./AdminRoute";
+import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
 
 
 
@@ -47,14 +49,14 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
-    children: [
+    children: [     
+      {
+        path: '/dashboard',
+        element: <PrivateRoute><MyAddedpets /></PrivateRoute>
+      },
       {
         path: '/dashboard/add-pet',
         element: <PrivateRoute><AddPet /></PrivateRoute>
-      },
-      {
-        path: '/dashboard/my-added-pets',
-        element: <PrivateRoute><MyAddedpets /></PrivateRoute>
       },
       {
         path: '/dashboard/update-pet/:id',
@@ -79,6 +81,16 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/adoption-requests',
         element: <PrivateRoute><AdoptionRequests /></PrivateRoute>
+      },
+      {
+        path: 'admin/manage-users',
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        )
       },
     ]
   },

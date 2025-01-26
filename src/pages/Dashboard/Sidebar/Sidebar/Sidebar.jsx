@@ -5,11 +5,15 @@ import {
   List,
   ListItem,
   ListItemPrefix,
+  Button,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
   ShoppingBagIcon,
-  HomeIcon,
+  Cog6ToothIcon,
+  TableCellsIcon,
+  WalletIcon,
+  KeyIcon,
   UserCircleIcon,
   InboxIcon,
   ClipboardDocumentIcon,
@@ -21,15 +25,15 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useRole from "../../../../hooks/useRole";
 
 
 
 const Sidebar = () => {
-  const { logOut } = useAuth();
-  const [role, isLoading] = useRole();
+  const { user, logOut } = useAuth();
+  const [role] = useRole();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
@@ -37,25 +41,34 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className={`md:fixed top-0 p-4 left-0 h-full shadow-lg bg-white  absolute inset-y-0 transition-transform duration-300 ease-in-out transform ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 z-10`}
+      <div className={`md:fixed top-0 p-4 left-0 h-full shadow-lg bg-white  absolute inset-y-0 transition-transform duration-300 ease-in-out transform ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 z-10 overflow-y-auto`}
       >
-        <div className="p-8 rounded-lg bg-orange-100 flex items-center border-b gap-4 border-gray-400">
-          <img
-            src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
-            alt="brand"
-            className="h-8 w-8"
+        <div className="px-8 py-4 rounded-lg bg-orange-100 flex flex-col items-center">
+          <Typography variant="h6">
+            Welcome {user?.displayName.split(" ")[0]}
+          </Typography>
+          <img src={user?.photoURL} alt=""
+            className="w-20 h-20 object-cover rounded-full my-3"
           />
           <Typography variant="h5" >
-            Dashboard
+            {user?.displayName}
           </Typography>
+          <Typography  >
+            {user?.email}
+          </Typography>
+          <Typography className="flex items-center gap-1">
+            <KeyIcon className="w-4 h-4" /> {role}
+          </Typography>
+          <Link to={'/'}>
+            <Button variant="text" color="white" className="mt-2">
+              back to home
+            </Button>
+          </Link>
         </div>
         <List>
-          {
-            role === 'admin' && <><NavLink></NavLink></>
-          }
-
           <NavLink
             to="/dashboard"
+            end
             className={({ isActive }) =>
               isActive
                 ? " text-blue-500 font-medium"
@@ -64,9 +77,9 @@ const Sidebar = () => {
           >
             <ListItem>
               <ListItemPrefix>
-                <HomeIcon className="h-5 w-5" />
+                <ShoppingBagIcon className="h-5 w-5" />
               </ListItemPrefix>
-              Home
+              My Added Pets
             </ListItem>
           </NavLink>
           <NavLink
@@ -82,21 +95,6 @@ const Sidebar = () => {
                 <PresentationChartBarIcon className="h-5 w-5" />
               </ListItemPrefix>
               Add a Pet
-            </ListItem>
-          </NavLink>
-          <NavLink
-            to="/dashboard/my-added-pets"
-            className={({ isActive }) =>
-              isActive
-                ? " text-blue-500 font-medium"
-                : " text-gray-600"
-            }
-          >
-            <ListItem>
-              <ListItemPrefix>
-                <ShoppingBagIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              My Added Pets
             </ListItem>
           </NavLink>
           <NavLink
@@ -160,6 +158,58 @@ const Sidebar = () => {
             </ListItem>
           </NavLink>
           <hr className="my-2 border-blue-gray-300" />
+          {
+            role === 'admin' && (
+              <>
+                <NavLink
+                  to="admin/manage-users"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-500 font-medium"
+                      : "text-gray-600"
+                  }
+                >
+                  <ListItem>
+                    <ListItemPrefix>
+                      <Cog6ToothIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Manage Users
+                  </ListItem>
+                </NavLink>
+                <NavLink
+                  to="admin/all-pets"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-500 font-medium"
+                      : "text-gray-600"
+                  }
+                >
+                  <ListItem>
+                    <ListItemPrefix>
+                      <TableCellsIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    All Pets
+                  </ListItem>
+                </NavLink>
+                <NavLink
+                  to="admin/all-donations"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-500 font-medium"
+                      : "text-gray-600"
+                  }
+                >
+                  <ListItem>
+                    <ListItemPrefix>
+                      <WalletIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    All Donations
+                  </ListItem>
+                </NavLink>
+                <hr className="my-2 border-blue-gray-300" />
+              </>
+            )
+          }
           <div>
             <NavLink
               to="/dashboard/profile"
@@ -187,7 +237,7 @@ const Sidebar = () => {
       </div>
 
       <div className="bg-white p-4 shadow-md flex items-center justify-between border-2 md:hidden">
-        <Typography variant="h6">User Dashboard</Typography>
+        <Typography variant="h6">{role === 'admin' ? "Admin" : "User"} Dashboard</Typography>
         <IconButton variant="text" size="lg" onClick={toggleDrawer}>
           {isDrawerOpen ? (
             <XMarkIcon className="h-6 w-6" />

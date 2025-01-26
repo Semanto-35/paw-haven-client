@@ -22,7 +22,7 @@ const AdoptionRequests = () => {
   });
 
   const statusMutation = useMutation({
-    mutationFn: ({ id, status }) => axiosSecure.patch(`/adopted-pet/${id}`),
+    mutationFn: ({ id, status }) => axiosSecure.patch(`/pet/${id}`,{status}),
     onSuccess: () => {
       queryClient.invalidateQueries(["adoptionRequests"]);
       Swal.fire("Success!", "Request status updated.", "success");
@@ -58,11 +58,11 @@ const AdoptionRequests = () => {
       ),
     },
     {
-      accessorKey: "requester.name",
+      accessorKey: "requesterName",
       header: "Requester",
       cell: ({ row }) => (
         <Typography variant="small" className="font-medium">
-          {row.original.requester.name}
+          {row.original.requesterName}
         </Typography>
       ),
     },
@@ -72,13 +72,13 @@ const AdoptionRequests = () => {
       cell: ({ row }) => (
         <div>
           <Typography variant="small" className="font-medium">
-            Email: {row.original.requester.email}
+            Email: {row.original.requesterEmail}
           </Typography>
           <Typography variant="small" className="font-medium">
-            Phone: {row.original.requester.phone}
+            Phone: {row.original.phone}
           </Typography>
           <Typography variant="small" className="font-medium">
-            Location: {row.original.requester.location}
+            Location: {row.original.location}
           </Typography>
         </div>
       ),
