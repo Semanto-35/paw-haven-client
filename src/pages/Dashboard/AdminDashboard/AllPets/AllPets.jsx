@@ -1,57 +1,55 @@
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table";
-import Swal from "sweetalert2";
-import useAuth from "../../../../hooks/useAuth";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loader from "../../../../components/shared/Loader/Loader";
-import {
-  Button,
-  Card,
-  CardBody,
-  Typography,
-  IconButton,
-  Tooltip,
-  Chip,
-} from "@material-tailwind/react";
-import { TrashIcon, PencilIcon, CheckIcon } from "@heroicons/react/24/solid";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { Button, Card, CardBody, Chip, IconButton, Tooltip, Typography } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { CheckIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
-const MyAddedPets = () => {
-  const { user } = useAuth();
+
+const AllPets = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const [sorting, setSorting] = useState([]);
 
   const { data: pets, isLoading, error } = useQuery({
-    queryKey: ["pets", user?.email],
+    queryKey: ["pets"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/all-pets/${user?.email}`);
+      const { data } = await axiosSecure.get(`/all-pets`);
       return data;
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.delete(`/pet/${petId}`),
+
+
+  const deletePetMutation = useMutation({
+    mutationFn: (id) => axiosSecure.delete(`/pet/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["pets"]);
-      Swal.fire("Deleted!", "The pet has been deleted.", "success");
+      Swal.fire("Success", "Pet deleted successfully.", "success");
     },
     onError: () => {
       Swal.fire("Error!", "Failed to delete the pet.", "error");
     },
   });
 
-  const adoptMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.patch(`/pet/${petId}`),
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ id, status }) => axiosSecure.patch(`/pet/${id}`, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries(["pets"]);
-      Swal.fire("Adopted!", "The pet has been marked as adopted.", "success");
+      Swal.fire("Success", `Pet status updated.`, "success");
     },
     onError: () => {
-      Swal.fire("Error!", "Failed to update the adoption status.", "error");
+      Swal.fire("Error!", "Failed to update status.", "error");
     },
   });
+
+  const updateStatus = (id, status) => {
+    updateStatusMutation.mutate({ id, status });
+  }
+
 
   const handleDelete = (petId) => {
     Swal.fire({
@@ -64,20 +62,23 @@ const MyAddedPets = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutation.mutate(petId);
+        deletePetMutation.mutate(petId);
       }
     });
   };
 
-  const handleAdopt = (petId) => {
-    adoptMutation.mutate(petId);
-  };
 
   const columns = [
     {
-      accessorKey: "index",
-      header: "S/N",
-      cell: (info) => info.row.index + 1,
+      accessorKey: "petImage",
+      header: "Image",
+      cell: ({ row }) => (
+        <img
+          src={row.original.petImage}
+          alt="Pet"
+          className="w-12 h-12 object-cover rounded-lg"
+        />
+      ),
     },
     {
       accessorKey: "petName",
@@ -98,14 +99,12 @@ const MyAddedPets = () => {
       ),
     },
     {
-      accessorKey: "petImage",
-      header: "Image",
+      accessorKey: "addedBy",
+      header: "Email",
       cell: ({ row }) => (
-        <img
-          src={row.original.petImage}
-          alt="Pet"
-          className="w-16 h-16 object-cover rounded-lg"
-        />
+        <Typography variant="small" className="font-medium">
+          {row.original.addedBy}
+        </Typography>
       ),
     },
     {
@@ -113,7 +112,7 @@ const MyAddedPets = () => {
       header: "Adoption Status",
       cell: ({ row }) => (
         <Chip
-          size="lg"
+          size="sm"
           value={`${row.original.adopted ? "Adopted" : "Not Adopted"}`}
           color={`${row.original.adopted ? "green" : "pink"}`}
         />
@@ -146,7 +145,7 @@ const MyAddedPets = () => {
             <IconButton
               variant="outlined"
               color="green"
-              onClick={() => handleAdopt(row.original._id)}
+              onClick={() => updateStatus(row.original._id, !row.original.adopted)}
             >
               <CheckIcon className="h-5 w-5" />
             </IconButton>
@@ -157,7 +156,7 @@ const MyAddedPets = () => {
   ];
 
   const table = useReactTable({
-    data: pets || [],
+    data: pets,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -167,17 +166,15 @@ const MyAddedPets = () => {
     initialState: { pagination: { pageSize: 10 } },
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader />
   if (error) return <Typography color="red">Error: {error.message}</Typography>;
-
-
 
 
   return (
     <div className="p-4">
       <Card>
-        <Typography variant="h3" className="text-center mb-6">
-          My Added Pets
+        <Typography variant="h3" className="mb-6 text-center">
+          Manage All Pets
         </Typography>
         <CardBody>
           <div className="overflow-x-auto">
@@ -223,7 +220,7 @@ const MyAddedPets = () => {
                       colSpan={table.getVisibleFlatColumns().length}
                       className="text-center py-4 text-gray-500"
                     >
-                      No pets added yet.
+                      No pets Found.
                     </td>
                   </tr>
                 )}
@@ -258,4 +255,4 @@ const MyAddedPets = () => {
   );
 };
 
-export default MyAddedPets;
+export default AllPets;

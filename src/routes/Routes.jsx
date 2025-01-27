@@ -17,6 +17,8 @@ import MyDonations from "../pages/Dashboard/UserDashboard/MyDonations/MyDonation
 import AdoptionRequests from "../pages/Dashboard/UserDashboard/AdoptionRequests/AdoptionRequests";
 import AdminRoute from "./AdminRoute";
 import ManageUsers from "../pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
+import AllPets from "../pages/Dashboard/AdminDashboard/AllPets/AllPets";
+import AllDonations from "../pages/Dashboard/AdminDashboard/AllDonatoins/AllDonations";
 
 
 
@@ -88,6 +90,26 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoute>
               <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        )
+      },
+      {
+        path: 'admin/all-pets',
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllPets />
+            </AdminRoute>
+          </PrivateRoute>
+        )
+      },
+      {
+        path: 'admin/all-donations',
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllDonations />
             </AdminRoute>
           </PrivateRoute>
         )

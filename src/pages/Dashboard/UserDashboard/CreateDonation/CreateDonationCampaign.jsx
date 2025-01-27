@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateDonationCampaign = () => {
   const { user } = useAuth();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const formik = useFormik({
     initialValues: {
@@ -60,100 +60,102 @@ const CreateDonationCampaign = () => {
   });
 
   return (
-    <Card className="max-w-2xl mx-auto p-4 shadow-lg">
-      <Typography variant="h3" className="text-center mb-6 text-teal-600">
-        Create Donation Campaign
-      </Typography>
+    <div className="p-4">
+      <Card className="max-w-2xl mx-auto shadow-lg">
+        <Typography variant="h3" className="text-center mb-6 text-teal-600">
+          Create Donation Campaign
+        </Typography>
 
-      <CardBody>
-        <form onSubmit={formik.handleSubmit}>
-          <div className="mb-2">
-            <Input
-              type="text"
-              label="PetName"
-              {...formik.getFieldProps("petName")}
-            />
-            {formik.touched.petName && formik.errors.petName && (
-              <Typography variant="small" color="red">
-                {formik.errors.petName}
-              </Typography>
-            )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="image">Pet Image</label>
-            <input
-              name="image"
-              type="file"
-              onChange={(event) => formik.setFieldValue("petImage", event.target.files[0])}
-              className="border px-3 py-1.5 w-full rounded-lg border-gray-400"
-            />
-            {formik.touched.petImage && formik.errors.petImage && (
-              <Typography variant="small" color="red">
-                {formik.errors.petImage}
-              </Typography>
-            )}
-          </div>
-          <div className="mb-4">
-            <Input
-              type="number"
-              label="Maximum Donation Amount"
-              {...formik.getFieldProps("maxDonation")}
-            />
-            {formik.touched.maxDonation && formik.errors.maxDonation && (
-              <Typography variant="small" color="red">
-                {formik.errors.maxDonation}
-              </Typography>
-            )}
-          </div>
+        <CardBody>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="mb-2">
+              <Input
+                type="text"
+                label="PetName"
+                {...formik.getFieldProps("petName")}
+              />
+              {formik.touched.petName && formik.errors.petName && (
+                <Typography variant="small" color="red">
+                  {formik.errors.petName}
+                </Typography>
+              )}
+            </div>
+            <div className="mb-4">
+              <label htmlFor="image">Pet Image</label>
+              <input
+                name="image"
+                type="file"
+                onChange={(event) => formik.setFieldValue("petImage", event.target.files[0])}
+                className="border px-3 py-1.5 w-full rounded-lg border-gray-400"
+              />
+              {formik.touched.petImage && formik.errors.petImage && (
+                <Typography variant="small" color="red">
+                  {formik.errors.petImage}
+                </Typography>
+              )}
+            </div>
+            <div className="mb-4">
+              <Input
+                type="number"
+                label="Maximum Donation Amount"
+                {...formik.getFieldProps("maxDonation")}
+              />
+              {formik.touched.maxDonation && formik.errors.maxDonation && (
+                <Typography variant="small" color="red">
+                  {formik.errors.maxDonation}
+                </Typography>
+              )}
+            </div>
 
-          <div className="mb-4">
-            <Input
-              type="date"
-              label="Last Date"
-              {...formik.getFieldProps("lastDate")}
-            />
-            {formik.touched.lastDate && formik.errors.lastDate && (
-              <Typography variant="small" color="red">
-                {formik.errors.lastDate}
-              </Typography>
-            )}
-          </div>
+            <div className="mb-4">
+              <Input
+                type="date"
+                label="Last Date"
+                {...formik.getFieldProps("lastDate")}
+              />
+              {formik.touched.lastDate && formik.errors.lastDate && (
+                <Typography variant="small" color="red">
+                  {formik.errors.lastDate}
+                </Typography>
+              )}
+            </div>
 
-          <div className="mb-4">
-            <Textarea
-              label="Short Description"
-              {...formik.getFieldProps("shortDescription")}
-            />
-            {formik.touched.shortDescription && formik.errors.shortDescription && (
-              <Typography variant="small" color="red">
-                {formik.errors.shortDescription}
-              </Typography>
-            )}
-          </div>
+            <div className="mb-4">
+              <Textarea
+                label="Short Description"
+                {...formik.getFieldProps("shortDescription")}
+              />
+              {formik.touched.shortDescription && formik.errors.shortDescription && (
+                <Typography variant="small" color="red">
+                  {formik.errors.shortDescription}
+                </Typography>
+              )}
+            </div>
 
-          <div className="mb-6">
-            <Textarea
-              label="Long Description"
-              {...formik.getFieldProps("longDescription")}
-            />
-            {formik.touched.longDescription && formik.errors.longDescription && (
-              <Typography variant="small" color="red">
-                {formik.errors.longDescription}
-              </Typography>
-            )}
-          </div>
+            <div className="mb-6">
+              <Textarea
+                label="Long Description"
+                {...formik.getFieldProps("longDescription")}
+              />
+              {formik.touched.longDescription && formik.errors.longDescription && (
+                <Typography variant="small" color="red">
+                  {formik.errors.longDescription}
+                </Typography>
+              )}
+            </div>
 
-          <Button
-            type="submit"
-            color="teal"
-            fullWidth
-            disabled={formik.isSubmitting}
-          >
-            {formik.isSubmitting ? "Submitting..." : "Create Campaign"}
-          </Button>
-        </form>
-      </CardBody>
-    </Card>
+            <Button
+              type="submit"
+              color="teal"
+              fullWidth
+              disabled={formik.isSubmitting}
+            >
+              {formik.isSubmitting ? "Submitting..." : "Create Campaign"}
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
+    </div>
   );
 };
 

@@ -1,38 +1,44 @@
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from "@tanstack/react-table";
-import Swal from "sweetalert2";
-import useAuth from "../../../../hooks/useAuth";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loader from "../../../../components/shared/Loader/Loader";
-import {
-  Button,
-  Card,
-  CardBody,
-  Typography,
-  IconButton,
-  Tooltip,
-  Chip,
-} from "@material-tailwind/react";
-import { TrashIcon, PencilIcon, CheckIcon } from "@heroicons/react/24/solid";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { getCoreRowModel, getPaginationRowModel, useReactTable, getSortedRowModel } from "@tanstack/react-table";
+import { Button, Card, CardBody, IconButton, Progress, Tooltip, Typography } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { PauseIcon, PencilIcon, PlayIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
-const MyAddedPets = () => {
-  const { user } = useAuth();
+
+const AllDonations = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const [sorting, setSorting] = useState([]);
 
-  const { data: pets, isLoading, error } = useQuery({
-    queryKey: ["pets", user?.email],
+  const { data: campaigns, isLoading, error } = useQuery({
+    queryKey: ["campaigns"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/all-pets/${user?.email}`);
+      const { data } = await axiosSecure.get(`/all-campaigns`);
       return data;
     },
   });
 
+  const toggleMutation = useMutation({
+    mutationFn: (donationId) => axiosSecure.patch(`/donation-campaigns/${donationId}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["donations"]);
+      Swal.fire("Success!", "Donation status updated.", "success");
+    },
+    onError: () => {
+      Swal.fire("Error!", "Failed to update donation status.", "error");
+    },
+  });
+
+  const handleToggleCampaign = (id) => {
+    toggleMutation.mutate(id);
+  }
+
   const deleteMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.delete(`/pet/${petId}`),
+    mutationFn: (petId) => axiosSecure.delete(`/donation-campaign/${petId}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["pets"]);
       Swal.fire("Deleted!", "The pet has been deleted.", "success");
@@ -42,16 +48,6 @@ const MyAddedPets = () => {
     },
   });
 
-  const adoptMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.patch(`/pet/${petId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["pets"]);
-      Swal.fire("Adopted!", "The pet has been marked as adopted.", "success");
-    },
-    onError: () => {
-      Swal.fire("Error!", "Failed to update the adoption status.", "error");
-    },
-  });
 
   const handleDelete = (petId) => {
     Swal.fire({
@@ -69,9 +65,6 @@ const MyAddedPets = () => {
     });
   };
 
-  const handleAdopt = (petId) => {
-    adoptMutation.mutate(petId);
-  };
 
   const columns = [
     {
@@ -80,51 +73,50 @@ const MyAddedPets = () => {
       cell: (info) => info.row.index + 1,
     },
     {
-      accessorKey: "petName",
-      header: "Pet Name",
-      cell: ({ row }) => (
-        <Typography variant="small" className="font-medium">
-          {row.original.petName}
-        </Typography>
-      ),
-    },
-    {
-      accessorKey: "petCategory",
-      header: "Category",
-      cell: ({ row }) => (
-        <Typography variant="small" className="font-medium">
-          {row.original.petCategory}
-        </Typography>
-      ),
-    },
-    {
       accessorKey: "petImage",
-      header: "Image",
+      header: "Pet Image",
       cell: ({ row }) => (
-        <img
-          src={row.original.petImage}
-          alt="Pet"
+        <img src={row.original.petImage}
           className="w-16 h-16 object-cover rounded-lg"
-        />
+          alt="" />
       ),
     },
     {
-      accessorKey: "adopted",
-      header: "Adoption Status",
+      accessorKey: "lastDate",
+      header: "Last Date",
       cell: ({ row }) => (
-        <Chip
-          size="lg"
-          value={`${row.original.adopted ? "Adopted" : "Not Adopted"}`}
-          color={`${row.original.adopted ? "green" : "pink"}`}
-        />
+        <Typography variant="small" className="font-medium">
+          {row.original.lastDate}
+        </Typography>
       ),
+    },
+    {
+      accessorKey: "addedBy",
+      header: "Asked By",
+      cell: ({ row }) => (
+        <Typography variant="small" className="font-medium">
+          {row.original.addedBy}
+        </Typography>
+      ),
+    },
+    {
+      header: "Progress",
+      cell: ({ row }) => {
+        const donation = row.original;
+        return (
+          <Progress
+            value={(donation.currentDonation / donation.maxDonation) * 100}
+            color="green"
+          />
+        );
+      }
     },
     {
       header: "Actions",
       cell: ({ row }) => (
         <div className="flex justify-evenly gap-2">
-          <Tooltip content="Update Pet">
-            <Link to={`/dashboard/update-pet/${row.original._id}`}>
+          <Tooltip content="Edit Campaign">
+            <Link to={`/dashboard/update-Campaign/${row.original._id}`}>
               <IconButton
                 variant="outlined"
                 color="blue"
@@ -133,7 +125,16 @@ const MyAddedPets = () => {
               </IconButton>
             </Link>
           </Tooltip>
-          <Tooltip content="Delete Pet">
+          <Tooltip content={row.original?.isPaused ? "Resume Campaign" : "Pause Campaign"}>
+            <IconButton
+              variant="outlined"
+              color="red"
+              onClick={() => handleToggleCampaign(row.original._id)}
+            >
+              {row.original?.isPaused ? <PlayIcon className="h-6 w-6" strokeWidth={2} /> : <PauseIcon className="h-6 w-6" strokeWidth={2} />}
+            </IconButton>
+          </Tooltip>
+          <Tooltip content="Delete Campaign">
             <IconButton
               variant="outlined"
               color="red"
@@ -142,22 +143,13 @@ const MyAddedPets = () => {
               <TrashIcon className="h-5 w-5" />
             </IconButton>
           </Tooltip>
-          <Tooltip content="Mark as Adopted">
-            <IconButton
-              variant="outlined"
-              color="green"
-              onClick={() => handleAdopt(row.original._id)}
-            >
-              <CheckIcon className="h-5 w-5" />
-            </IconButton>
-          </Tooltip>
         </div>
       ),
     },
-  ];
+  ]
 
   const table = useReactTable({
-    data: pets || [],
+    data: campaigns,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -167,17 +159,15 @@ const MyAddedPets = () => {
     initialState: { pagination: { pageSize: 10 } },
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader />
   if (error) return <Typography color="red">Error: {error.message}</Typography>;
-
-
 
 
   return (
     <div className="p-4">
       <Card>
         <Typography variant="h3" className="text-center mb-6">
-          My Added Pets
+          Manage All Campaigns
         </Typography>
         <CardBody>
           <div className="overflow-x-auto">
@@ -223,7 +213,7 @@ const MyAddedPets = () => {
                       colSpan={table.getVisibleFlatColumns().length}
                       className="text-center py-4 text-gray-500"
                     >
-                      No pets added yet.
+                      No Campaigns Found.
                     </td>
                   </tr>
                 )}
@@ -258,4 +248,4 @@ const MyAddedPets = () => {
   );
 };
 
-export default MyAddedPets;
+export default AllDonations;

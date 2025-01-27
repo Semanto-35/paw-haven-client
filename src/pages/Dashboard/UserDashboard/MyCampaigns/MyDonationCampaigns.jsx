@@ -134,6 +134,7 @@ const MyDonationCampaigns = () => {
     data: campaigns,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    initialState: { pagination: { pageSize: 10 } },
   });
 
   if (isLoading) return <Loader />
@@ -143,55 +144,80 @@ const MyDonationCampaigns = () => {
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <Typography variant="h3" className="text-center mb-6">
-        My Donation Campaigns
-      </Typography>
+    <div className="p-4">
       <Card>
+        <Typography variant="h3" className="text-center mb-6">
+          My Donation Campaigns
+        </Typography>
         <CardBody>
-          <table className="min-w-full table-auto border-collapse">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="bg-gray-100">
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      className="border border-gray-300 px-4 py-2 text-left"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.length > 0 ? (
-                table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-gray-50">
-                    {row.getVisibleCells().map((cell) => (
-                      <td
-                        key={cell.id}
-                        className="border border-gray-300 px-4 py-2"
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto border">
+              <thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id} className="bg-gray-100">
+                    {headerGroup.headers.map((header) => (
+                      <th
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        className="border border-gray-300 px-4 py-2 text-center text-sm"
                       >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </th>
                     ))}
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={table.getVisibleFlatColumns().length}
-                    className="text-center py-4 text-gray-500"
-                  >
-                    No Results Found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                ))}
+              </thead>
+              <tbody>
+                {table.getRowModel().rows.length > 0 ? (
+                  table.getRowModel().rows.map((row) => (
+                    <tr key={row.id} className="hover:bg-gray-100 even:bg-gray-50">
+                      {row.getVisibleCells().map((cell) => (
+                        <td
+                          key={cell.id}
+                          className="border border-gray-300 px-4 py-2"
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={table.getVisibleFlatColumns().length}
+                      className="text-center py-4 text-gray-500"
+                    >
+                      No donation campaigns yet.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex justify-between items-center mt-4">
+            <Button
+              onClick={table.previousPage}
+              disabled={!table.getCanPreviousPage()}
+              size="sm"
+              variant="outlined"
+            >
+              Previous
+            </Button>
+            <Typography variant="small">
+              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount()}
+            </Typography>
+            <Button
+              onClick={table.nextPage}
+              disabled={!table.getCanNextPage()}
+              size="sm"
+              variant="outlined"
+            >
+              Next
+            </Button>
+          </div>
         </CardBody>
       </Card>
 

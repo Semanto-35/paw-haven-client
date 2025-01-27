@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import * as Yup from "yup"
 import { imageUpload } from "../../../../utilities/utiliti";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import useAuth from "../../../../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../../../components/shared/Loader/Loader";
@@ -13,7 +12,6 @@ import Loader from "../../../../components/shared/Loader/Loader";
 
 const EditDonation = () => {
   const { id } = useParams();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
@@ -58,8 +56,7 @@ const EditDonation = () => {
 
         const updateData = {
           ...values,
-          petImage: image,
-          addedBy: user?.email,
+          petImage: image || campaignData?.petImage,
         };
 
         await axiosSecure.put(`/update-campaign/${id}`, updateData);

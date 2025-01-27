@@ -2,15 +2,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loader from "../../../../components/shared/Loader/Loader";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import { getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
+import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { Button, Card, CardBody, Tooltip, Typography } from "@material-tailwind/react";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 
 const ManageUsers = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const [sorting, setSorting] = useState([]);
 
   const { data: users, isLoading, error } = useQuery({
     queryKey: ["users", user?.email],
@@ -107,6 +109,9 @@ const ManageUsers = () => {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: { sorting },
     initialState: { pagination: { pageSize: 10 } },
   });
 
@@ -116,9 +121,9 @@ const ManageUsers = () => {
 
   return (
     <div className="p-4">
-      <Card className="container mx-auto text-center">
-        <Typography variant="h3" className="font-bold mb-6">
-          My Added Pets
+      <Card>
+        <Typography variant="h3" className="text-center mb-6">
+          Manage All Users
         </Typography>
         <CardBody>
           <div className="overflow-x-auto">
@@ -130,7 +135,7 @@ const ManageUsers = () => {
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
-                        className="px-4 py-2 border text-center text-sm font-semibold"
+                        className="px-4 py-2  text-center text-sm border border-gray-300"
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         {header.isPlaceholder
