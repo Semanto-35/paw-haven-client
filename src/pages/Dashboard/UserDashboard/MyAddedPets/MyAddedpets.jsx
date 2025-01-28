@@ -43,7 +43,7 @@ const MyAddedPets = () => {
   });
 
   const adoptMutation = useMutation({
-    mutationFn: (petId) => axiosSecure.patch(`/pet/${petId}`),
+    mutationFn: ({ petId, status }) => axiosSecure.patch(`/pet/${petId}`, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries(["pets"]);
       Swal.fire("Adopted!", "The pet has been marked as adopted.", "success");
@@ -69,8 +69,8 @@ const MyAddedPets = () => {
     });
   };
 
-  const handleAdopt = (petId) => {
-    adoptMutation.mutate(petId);
+  const handleAdopt = (petId, status) => {
+    adoptMutation.mutate({ petId, status });
   };
 
   const columns = [
@@ -146,7 +146,7 @@ const MyAddedPets = () => {
             <IconButton
               variant="outlined"
               color="green"
-              onClick={() => handleAdopt(row.original._id)}
+              onClick={() => handleAdopt(row.original._id, true)}
             >
               <CheckIcon className="h-5 w-5" />
             </IconButton>

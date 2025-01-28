@@ -3,7 +3,7 @@ import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import Loader from "../../../../components/shared/Loader/Loader";
-import { Button, Card, CardBody, Chip, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, Typography } from "@material-tailwind/react";
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 
 
@@ -72,41 +72,37 @@ const AdoptionRequests = () => {
       cell: ({ row }) => (
         <div>
           <Typography variant="small" className="font-medium">
-            Email: {row.original.requesterEmail}
+            <span className="font-semibold">Email:</span> {row.original.requesterEmail}
           </Typography>
           <Typography variant="small" className="font-medium">
-            Phone: {row.original.phone}
+            <span className="font-semibold">Phone:</span> {row.original.phoneNumber}
           </Typography>
           <Typography variant="small" className="font-medium">
-            Location: {row.original.location}
+            <span className="font-semibold">Address:</span> {row.original.address}
           </Typography>
         </div>
       ),
     },
     {
       header: "Actions",
-      cell: ({ row }) => {
-        row.original.status ? (
-          <Chip color="green" value="Accepted" />
-        ) : (
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              color="green"
-              onClick={() => handleStatusUpdate(row.original._id, true)}
-            >
-              Accept
-            </Button>
-            <Button
-              size="sm"
-              color="red"
-              onClick={() => handleStatusUpdate(row.original._id, false)}
-            >
-              Reject
-            </Button>
-          </div>
-        )
-      }
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            color="green"
+            onClick={() => handleStatusUpdate(row.original.petId, true)}
+          >
+            Accept
+          </Button>
+          <Button
+            size="sm"
+            color="red"
+            onClick={() => handleStatusUpdate(row.original.petId, false)}
+          >
+            Reject
+          </Button>
+        </div>
+      )
     },
   ]
 
