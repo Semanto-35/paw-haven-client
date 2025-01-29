@@ -11,7 +11,7 @@ const MainLayout = () => {
       <header>
         <NavbarComponent />
       </header>
-      <main className="min-h-[calc(100vh-353px)]">
+      <main className="min-h-[calc(100vh-353px)] dark:bg-gray-900 dark:text-gray-100">
         <Outlet />
       </main>
       <footer>

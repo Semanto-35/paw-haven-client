@@ -7,7 +7,7 @@ import { Button, Input } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 
 
-const CheckoutForm = ({ campaigns, closeModal, }) => {
+const CheckoutForm = ({ campaigns, closeModal}) => {
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -58,9 +58,8 @@ const CheckoutForm = ({ campaigns, closeModal, }) => {
           },
         });
 
-        const totalDonation = campaigns.currentDonation + values.donatedAmount;
+        const totalDonation = campaigns?.currentDonation + values.donatedAmount;
 
-        console.log(campaigns?._id,totalDonation);
 
         if (payment.paymentIntent?.status === "succeeded") {
           await axiosSecure.post("/donations", {
@@ -73,7 +72,6 @@ const CheckoutForm = ({ campaigns, closeModal, }) => {
             donorEmail: user?.email,
             donorName: user?.displayName,
           });
-          
           await axiosSecure.patch(`/donated-camp/${campaigns._id}`,{totalDonation});
 
           closeModal();
@@ -131,6 +129,7 @@ const CheckoutForm = ({ campaigns, closeModal, }) => {
 
       <Button
         type="submit"
+        color="light-green"
         variant="gradient"
         disabled={!stripe || !elements || formik.isSubmitting}
         fullWidth

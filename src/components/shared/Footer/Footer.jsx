@@ -25,7 +25,7 @@ const Footer = () => {
 
 
   return (
-    <footer className="relative w-full">
+    <footer className="relative dark:bg-gray-900 dark:text-gray-100 w-full py-16">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Typography variant="h5" className="mb-6">
@@ -36,7 +36,7 @@ const Footer = () => {
               <ul key={title}>
                 <Typography
                   variant="small"
-                  color="blue-gray"
+                  color=""
                   className="mb-3 font-medium opacity-40"
                 >
                   {title}
@@ -60,7 +60,7 @@ const Footer = () => {
         <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
           <Typography
             variant="small"
-            className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
+            className="mb-4 text-center font-normal  md:mb-0"
           >
             &copy; {currentYear} <a href="https://material-tailwind.com/">Paw Haven</a>. All
             Rights Reserved.

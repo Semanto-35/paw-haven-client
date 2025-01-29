@@ -20,6 +20,7 @@ const MyDonations = () => {
       return data;
     },
   });
+  console.log(donations);
 
   const refundMutation = useMutation({
     mutationFn: (donationId) => axiosSecure.patch(`/donations/${donationId}`),

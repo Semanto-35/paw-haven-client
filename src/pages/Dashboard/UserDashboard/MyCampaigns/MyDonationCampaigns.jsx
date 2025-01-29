@@ -16,13 +16,25 @@ const MyDonationCampaigns = () => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
 
-  const { data: campaigns, isLoading, error } = useQuery({
+  const { data: campaigns, isLoading,isPending,isSuccess, error } = useQuery({
     queryKey: ["campaigns", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/all-campaigns/${user?.email}`);
       return data;
     },
   });
+
+  const handleViewDonators  = async (campaignId) => {
+    const response = await axiosSecure.get(`/donations/${campaignId}`);
+    return response.data;
+  };
+
+  const { data: donators } = useQuery({
+    queryKey: ["donators"],
+    queryFn: handleViewDonators
+  });
+
+
 
   const toggleMutation = useMutation({
     mutationFn: (donationId) => axiosSecure.patch(`/donation-campaigns/${donationId}`),
@@ -39,19 +51,27 @@ const MyDonationCampaigns = () => {
     toggleMutation.mutate(id);
   }
 
-  const { mutate: handleViewDonators, data: donators, isPending, isSuccess } = useMutation({
-    mutationFn: async (campaignId) => {
-      const { data } = await axiosSecure.get(`/donations/${campaignId}`);
-      return data;
-    },
-    onSuccess: () => {
-      setOpen(true);
-    },
-    onError: () => {
-      Swal.fire("Error!", "Failed to fetch donators.", "error");
-    },
-  });
+  // const { mutate: handleViewDonators, data: donators, isPending, isSuccess } = useMutation({
+  //   mutationFn: async (campaignId) => {
+  //     const { data } = await axiosSecure.get(`/donations/${campaignId}`);
+  //     return data;
+  //   },
+  //   onSuccess: () => {
+  //     setOpen(true);
+  //   },
+  //   onError: () => {
+  //     Swal.fire("Error!", "Failed to fetch donators.", "error");
+  //   },
+  // });
 
+  // const { data: donators } = useQuery({
+  //   queryKey: ["campaigns", id],
+  //   queryFn: async () => {
+  //     const { data } = await axiosSecure.get(`/donations/${campaignId}`);
+  //     return data;
+  //   },
+  // });
+  console.log(donators);
 
   const columns = [
     {
@@ -226,15 +246,16 @@ const MyDonationCampaigns = () => {
         <DialogBody divider>
           {isPending ? (
             <Typography>Loading donators...</Typography>
-          ) : isSuccess && donators.length > 0 ? (
+          ) : isSuccess && donators?.length > 0 ? (
             <ul>
               {donators.map((donator) => (
                 <li
                   key={donator._id}
                   className="flex justify-between items-center border-b py-2"
                 >
-                  <Typography>{donator.name}</Typography>
-                  <Typography>${donator.amount}</Typography>
+                  <Typography>{donator.
+                    donorName}</Typography>
+                  <Typography>${donator.donatedAmount}</Typography>
                 </li>
               ))}
             </ul>

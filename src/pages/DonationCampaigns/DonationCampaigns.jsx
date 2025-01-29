@@ -39,7 +39,7 @@ const DonationCampaigns = () => {
 
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 my-12">
+    <div className="max-w-screen-2xl mx-auto px-4 py-12 ">
       <div className="my-8 text-center">
         <Typography variant="h2" >
           Donation Campaigns
@@ -49,8 +49,8 @@ const DonationCampaigns = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {data?.pages.map((page) =>
           page.campaigns.map((campaign) => (
-            <Card key={campaign._id} className="shadow-md rounded-lg w-full">
-              <CardHeader floated={false} color="blue-gray">
+            <Card key={campaign._id} className="shadow-md rounded-lg w-full dark:bg-gray-800 dark:text-gray-100">
+              <CardHeader floated={false} >
                 <img
                   src={campaign.petImage}
                   alt={campaign.petName}
@@ -58,22 +58,22 @@ const DonationCampaigns = () => {
                 />
               </CardHeader>
               <CardBody className="p-4">
-                <Typography variant="h5" color="blue-gray">
+                <Typography variant="h5" >
                   {campaign.petName}
                 </Typography>
 
-                <Typography variant="paragraph" color="blue-gray" className="font-medium">
+                <Typography variant="paragraph"  className="font-medium">
                   Max Donation: ${campaign.maxDonation}
                 </Typography>
 
-                <Typography variant="paragraph" color="blue-gray" className="font-medium">
+                <Typography variant="paragraph"  className="font-medium">
                   Donated: ${campaign.currentDonation}
                 </Typography>
               </CardBody>
 
               <CardFooter className="pt-3">
                 <Link to={`/campaigns/${campaign._id}`}>
-                  <Button size="md" fullWidth>
+                  <Button size="md" color="blue" fullWidth>
                     view details
                   </Button>
                 </Link>
@@ -83,11 +83,11 @@ const DonationCampaigns = () => {
         )}
       </div>
       <div ref={ref} className="text-center mt-4">
-        {isFetchingNextPage && <Typography variant="paragraph" color="blue-gray">
+        {isFetchingNextPage && <Typography variant="paragraph">
           Loading more campaigns...
         </Typography>}
         {!hasNextPage && !isFetchingNextPage && (
-          <Typography variant="paragraph" color="blue-gray">No more campaigns to show</Typography>
+          <Typography variant="paragraph" >No more campaigns to show.</Typography>
         )}
       </div>
     </div>

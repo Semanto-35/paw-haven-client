@@ -23,7 +23,7 @@ const CallToAction = () => {
           />
         </motion.div>
         <motion.div
-          className="space-y-6 text-gray-800"
+          className="space-y-6"
           initial={{ opacity: 0, y: 150 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

@@ -41,9 +41,9 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className={`md:fixed top-0 p-4 left-0 h-full shadow-lg bg-white  absolute inset-y-0 transition-transform duration-300 ease-in-out transform ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 z-10 overflow-y-auto`}
+      <div className={`md:fixed top-0 p-4 left-0 h-full shadow-lg bg-white dark:bg-blue-gray-100 absolute inset-y-0 transition-transform duration-300 ease-in-out transform ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 z-10 overflow-y-auto`}
       >
-        <div className="px-8 py-4 rounded-lg bg-orange-100 flex flex-col items-center">
+        <div className="px-8 py-4 rounded-lg dark:bg-gray-700 dark:text-gray-100 flex flex-col items-center">
           <Typography variant="h6">
             Welcome {user?.displayName.split(" ")[0]}
           </Typography>

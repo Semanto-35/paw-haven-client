@@ -1,11 +1,12 @@
 import { Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
     <section className="relative max-w-7xl mx-auto w-full h-[500px] bg-blue-100 flex items-center justify-center">
       <img
-        src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+        src="https://i.ibb.co.com/YBqx2rXh/2148345913.jpg"
         alt="Banner"
         className="absolute w-full h-full object-cover"
       />
@@ -36,9 +37,11 @@ const Banner = () => {
           }}
           viewport={{ once: true }}
         >
-          <Button className="mt-6" color="blue" size="lg">
-            Explore Pets
-          </Button>
+          <Link to={'/pets'}>
+            <Button className="mt-6" color="blue" size="lg">
+              Explore Pets
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

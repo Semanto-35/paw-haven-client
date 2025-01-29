@@ -71,51 +71,52 @@ const PetDetails = () => {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 py-16">
-      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-none">
+      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-none dark:bg-gray-700 dark:text-gray-100">
         <CardHeader
           shadow={false}
           floated={false}
           className="m-0 lg:w-1/2 shrink-0"
         >
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+            src={petImage}
             alt="card-image"
             className="h-full w-full object-cover"
           />
         </CardHeader>
         <CardBody>
-          <Typography variant="h2" color="blue-gray">
+          <Typography variant="h2">
             Meet <span className="text-orange-600">{petName}</span>
           </Typography>
-          <Typography variant="paragraph" color="blue-gray" className="mb-6">
+          <Typography variant="paragraph"  className="mb-6">
             Added By <span className="text-orange-600">{addedBy}</span>
           </Typography>
           <div className="grid grid-cols-2 justify-between lg:gap-12 mb-4">
             <div>
-              <Typography variant="h5" color="blue-gray" className="mb-2">
+              <Typography variant="h5"  className="mb-2">
                 Category: <span className="font-light">{petCategory}</span>
               </Typography>
-              <Typography variant="h5" color="blue-gray" className="mb-2">
+              <Typography variant="h5"  className="mb-2">
                 Location: <span className="font-light">{petLocation}</span>
               </Typography>
-              <Typography variant="h5" color="blue-gray" className="mb-2">
+              <Typography variant="h5"  className="mb-2">
                 Age: <span className="font-light">
                   {petAge < 1 ? `${Math.round(petAge * 10)} months` : `${petAge} years`}
                 </span>
               </Typography>
             </div>
             <div>
-              <Typography variant="h5" color="blue-gray" className="flex items-center gap-2">
+              <Typography variant="h5"  className="flex items-center gap-2">
                 Status: <Chip size="sm" variant="ghost" value={adopted ? 'Adopted' : 'Available'} className="rounded-full"
                   color={adopted ? "red" : "green"}
                 />
               </Typography>
             </div>
           </div>
-          <Typography color="gray" className="mb-8 font-normal">
+          <Typography className="mb-8 font-normal">
             {shortDescription}
           </Typography>
           <Button onClick={openModal} variant="filled"
+          color="green"
             disabled={adopted}
           >
             Adopt now
@@ -123,8 +124,8 @@ const PetDetails = () => {
         </CardBody>
       </Card>
 
-      <div className="border space-y-4 my-10 p-4">
-        <Typography variant="h3" color="blue-gray">
+      <div className=" space-y-4 my-10 p-4">
+        <Typography variant="h3" >
           More About <span >{petName}</span>
         </Typography>
         <Typography>

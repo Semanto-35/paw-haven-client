@@ -5,6 +5,7 @@ import { Bars3Icon, XMarkIcon, IdentificationIcon } from "@heroicons/react/24/ou
 import { HomeIcon, LifebuoyIcon, WalletIcon, PowerIcon } from "@heroicons/react/24/solid";
 import userImg from '../../../assets/icons/user.jpg';
 import useAuth from "../../../hooks/useAuth";
+import DarkModeToggle from "../DarkMode/DarkModeToggle";
 
 
 
@@ -50,11 +51,11 @@ const NavbarComponent = () => {
   </>
 
   return (
-    <Navbar fullWidth className="mx-auto max-w-7xl px-4 py-2 shadow-md">
-      <div className="flex items-center justify-between text-blue-gray-900">
+    <Navbar fullWidth className="mx-auto bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 max-w-7xl px-4 py-2 shadow-md">
+      <div className="flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img className="w-12" src="/logo-path.png" alt="Logo" />
+          <img className="w-12" src="https://i.ibb.co.com/69vhxMW/paw-1.png" alt="Logo" />
           <Typography
             variant="h4"
             className=""
@@ -71,7 +72,8 @@ const NavbarComponent = () => {
         </div>
 
         {/* User Menu */}
-        <div>
+        <div className="flex justify-end gap-3">
+          <DarkModeToggle/>
           {user ? (
             <div className="hidden lg:block">
               <Menu allowHover placement="bottom-end">
@@ -98,7 +100,7 @@ const NavbarComponent = () => {
                   <hr className="my-1" />
                   <MenuItem
                     onClick={() => navigate('/dashboard')}
-                    className="flex items-center gap-2 text-blue-gray-900"
+                    className="flex items-center gap-2"
                   >
                     <IdentificationIcon className="w-4 h-4" />
                     <Typography variant="small" className="font-medium">
@@ -125,7 +127,7 @@ const NavbarComponent = () => {
                 </Button>
               </Link>
               <Link to="/signUp">
-                <Button variant="gradient" size="sm">
+                <Button variant="gradient" color="blue-gray" size="sm">
                   Sign Up
                 </Button>
               </Link>
@@ -210,7 +212,7 @@ const NavbarComponent = () => {
                   </Button>
                 </Link>
                 <Link to="/signUp" className="w-1/2">
-                  <Button variant="gradient" size="sm" fullWidth>
+                  <Button variant="gradient" size="sm" color="gray" fullWidth>
                     Sign Up
                   </Button>
                 </Link>

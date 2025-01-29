@@ -62,8 +62,8 @@ const PetListing = () => {
 
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4">
-      <div className="my-8 text-center">
+    <div className="max-w-screen-2xl mx-auto px-4  dark:bg-gray-900 dark:text-gray-100">
+      <div className="py-8 text-center">
         <Typography variant="h2" >
           Adopt Your New Best Friend
         </Typography>
@@ -92,7 +92,7 @@ const PetListing = () => {
             <Option value="Fish">Fish</Option>
           </Select>
         </div>
-        <Button variant="filled"
+        <Button color="blue-gray" variant="filled"
           onClick={() => refetch()}
         >search</Button>
       </div>
@@ -102,7 +102,7 @@ const PetListing = () => {
           ? renderSkeletons(9)
           : data?.pages.map((page) =>
             page.pets.map((pet) => (
-              <Card key={pet._id} className="w-full shadow-lg">
+              <Card key={pet._id} className="w-full shadow-lg dark:bg-gray-700 dark:text-gray-100">
                 <CardHeader floated={false} color="blue-gray">
                   <motion.img
                     src={pet.petImage}
@@ -113,18 +113,17 @@ const PetListing = () => {
                 </CardHeader>
                 <CardBody>
                   <div className="mb-3 flex items-center justify-between">
-                    <Typography variant="h4" color="blue-gray" className="font-medium">
+                    <Typography variant="h4"  className="font-medium">
                       {pet.petName}
                     </Typography>
                     <Typography
-                      color="blue-gray"
                       className="flex items-center gap-1.5 font-normal"
                     >
                       {pet.petAge < 1 ? `${Math.round(pet.petAge * 10)} months` : `${pet.petAge} years`}
                     </Typography>
                   </div>
                   <Typography
-                    color="blue-gray"
+                    
                     className="flex items-center gap-1.5 font-normal"
                   >
                     <MapPinIcon className="w-6 h-6" />
@@ -133,7 +132,7 @@ const PetListing = () => {
                 </CardBody>
                 <CardFooter className="pt-3">
                   <Link to={`/pets/${pet._id}`}>
-                    <Button size="md" fullWidth>
+                    <Button size="md" color="blue" fullWidth>
                       see details
                     </Button>
                   </Link>

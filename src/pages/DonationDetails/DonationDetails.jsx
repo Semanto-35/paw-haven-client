@@ -51,7 +51,7 @@ const DonationDetails = () => {
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 py-16">
-      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-none">
+      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-none  dark:bg-gray-700 dark:text-gray-100">
         <CardHeader
           shadow={false}
           floated={false}
@@ -64,30 +64,30 @@ const DonationDetails = () => {
           />
         </CardHeader>
         <CardBody>
-          <Typography variant="h2" color="blue-gray">
+          <Typography variant="h2" >
             Meet <span className="text-orange-600">{petName}</span>
           </Typography>
-          <Typography variant="paragraph" color="blue-gray" className="mb-6">
+          <Typography variant="paragraph"  className="mb-6">
             Added By <span className="text-orange-600">{addedBy}</span>
           </Typography>
 
           <div className=" mb-4">
-            <Typography variant="h5" color="blue-gray" className="mb-2">
+            <Typography variant="h5"  className="mb-2">
               Max Donation: <span className="font-light">${maxDonation}</span>
             </Typography>
-            <Typography variant="h5" color="blue-gray" className="mb-2">
+            <Typography variant="h5"  className="mb-2">
               Donation: <span className="font-light">${currentDonation}</span>
             </Typography>
-            <Typography variant="h5" color="blue-gray" className="flex items-center gap-2 mb-2">
+            <Typography variant="h5"  className="flex items-center gap-2 mb-2">
               Status: <Chip size="sm" variant="ghost" value={isPaused ? 'Paused' : 'Can Donate'} className="rounded-full"
                 color={isPaused ? "red" : "green"}
               />
             </Typography>
-            <Typography variant="h5" color="blue-gray" className="mb-2">
+            <Typography variant="h5"  className="mb-2">
               Last Date: <span className="font-light">{lastDate}</span>
             </Typography>
           </div>
-          <Typography color="gray" className="mb-8 font-normal">
+          <Typography  className="mb-8 font-normal">
             {shortDescription}
           </Typography>
           <Button onClick={openModal} variant="filled" color="green"
@@ -108,12 +108,12 @@ const DonationDetails = () => {
       </div>
 
       <div className="mt-32">
-        <Typography variant="h2" color="blue-gray">
+        <Typography variant="h2" >
           Explore more campaigns
         </Typography>
         <div className="my-16 space-y-6">
           {recommandedCampaigns?.length > 0 ? recommandedCampaigns?.map((camp) => (
-            <Card shadow={false} key={camp._id} className="w-full flex-col lg:flex-row gap-12 rounded-none">
+            <Card shadow={false} key={camp._id} className="w-full flex-col lg:flex-row gap-12 rounded-none bg-gray-200">
               <CardHeader
                 shadow={false}
                 floated={false}
@@ -172,7 +172,7 @@ const DonationDetails = () => {
         </DialogHeader>
         <DialogBody className="space-y-4 pb-6">
           <Elements stripe={stripePromise}>
-            <CheckoutForm campaigns={campaigns} closeModal={closeModal} />
+            <CheckoutForm campaigns={campaigns} closeModal={closeModal} donation={currentDonation} />
           </Elements>
         </DialogBody>
       </Dialog>
