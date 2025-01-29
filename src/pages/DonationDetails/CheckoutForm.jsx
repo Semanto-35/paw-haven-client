@@ -46,7 +46,7 @@ const CheckoutForm = ({ campaigns, closeModal}) => {
 
       try {
         const { data } = await axiosSecure.post("/create-payment-intent", {
-          amount: values.donatedAmount,
+          donatedAmount: values.donatedAmount,
         });
 
         const payment = await stripe.confirmCardPayment(data.clientSecret, {

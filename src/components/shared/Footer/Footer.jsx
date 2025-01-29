@@ -36,7 +36,6 @@ const Footer = () => {
               <ul key={title}>
                 <Typography
                   variant="small"
-                  color=""
                   className="mb-3 font-medium opacity-40"
                 >
                   {title}
