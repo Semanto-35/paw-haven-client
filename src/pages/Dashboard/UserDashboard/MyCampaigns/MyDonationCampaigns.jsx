@@ -15,8 +15,9 @@ const MyDonationCampaigns = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [donators, setDonators] = useState([]);
 
-  const { data: campaigns, isLoading,isPending,isSuccess, error } = useQuery({
+  const { data: campaigns, isLoading, error } = useQuery({
     queryKey: ["campaigns", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/all-campaigns/${user?.email}`);
@@ -24,15 +25,13 @@ const MyDonationCampaigns = () => {
     },
   });
 
-  const handleViewDonators  = async (campaignId) => {
-    const response = await axiosSecure.get(`/donations/${campaignId}`);
-    return response.data;
+
+  const handleViewDonators = async (id) => {
+    const { data } = await axiosSecure.get(`/donationCampaign/${id}`);
+    setDonators(data);
+    setOpen(true);
   };
 
-  const { data: donators } = useQuery({
-    queryKey: ["donators"],
-    queryFn: handleViewDonators
-  });
 
 
 
@@ -50,28 +49,6 @@ const MyDonationCampaigns = () => {
   const handlePauseCampaign = (id) => {
     toggleMutation.mutate(id);
   }
-
-  // const { mutate: handleViewDonators, data: donators, isPending, isSuccess } = useMutation({
-  //   mutationFn: async (campaignId) => {
-  //     const { data } = await axiosSecure.get(`/donations/${campaignId}`);
-  //     return data;
-  //   },
-  //   onSuccess: () => {
-  //     setOpen(true);
-  //   },
-  //   onError: () => {
-  //     Swal.fire("Error!", "Failed to fetch donators.", "error");
-  //   },
-  // });
-
-  // const { data: donators } = useQuery({
-  //   queryKey: ["campaigns", id],
-  //   queryFn: async () => {
-  //     const { data } = await axiosSecure.get(`/donations/${campaignId}`);
-  //     return data;
-  //   },
-  // });
-  console.log(donators);
 
   const columns = [
     {
@@ -244,24 +221,23 @@ const MyDonationCampaigns = () => {
       <Dialog open={open} onClose={() => setOpen(false)} size="md">
         <DialogHeader>Donators List</DialogHeader>
         <DialogBody divider>
-          {isPending ? (
-            <Typography>Loading donators...</Typography>
-          ) : isSuccess && donators?.length > 0 ? (
-            <ul>
-              {donators.map((donator) => (
-                <li
-                  key={donator._id}
-                  className="flex justify-between items-center border-b py-2"
-                >
-                  <Typography>{donator.
-                    donorName}</Typography>
-                  <Typography>${donator.donatedAmount}</Typography>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <Typography>No donators found.</Typography>
-          )}
+          {
+            donators?.length > 0 ? (
+              <ul className="px-6">
+                {donators?.map((donator,idx) => (
+                  <li
+                    key={donator._id}
+                    className="flex justify-between items-center border-b py-2"
+                  >
+                    <Typography>{idx+1}. {donator.
+                      donorName}</Typography>
+                    <Typography>${donator.donatedAmount}</Typography>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Typography>No donators found.</Typography>
+            )}
         </DialogBody>
         <DialogFooter>
           <Button

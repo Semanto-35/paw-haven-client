@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loader from "../../../../components/shared/Loader/Loader";
 import { Button, Card, CardBody, Chip, Tooltip, Typography } from "@material-tailwind/react";
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
+import { toast } from "react-toastify";
 
 
 
@@ -20,21 +21,51 @@ const MyDonations = () => {
       return data;
     },
   });
-  console.log(donations);
 
-  const refundMutation = useMutation({
-    mutationFn: (donationId) => axiosSecure.patch(`/donations/${donationId}`),
+  const handleRefund = (id) => {
+    const camp = donations.find(donation => donation._id === id);
+    refundMutation.mutate({ campaignId: camp.campaignId, money: camp.currentDonation });
+
+  }
+
+
+  const deleteMutation = useMutation({
+    mutationFn: (donationId) => axiosSecure.delete(`/delete-donation/${donationId}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["userDonations"]);
-      Swal.fire("Success!", "Refund request submitted.", "success");
+      toast.success("Donation removed from my donations");
+    },
+    onError: () => {
+      toast.error("Failled to removed donation")
+    },
+  });
+
+  const refundMutation = useMutation({
+    mutationFn: ({campaignId, money}) => axiosSecure.patch(`/refundMoney/${campaignId}`, { money }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userDonations"]);
+      Swal.fire("Success!", "Refund successful.", "success");
     },
     onError: () => {
       Swal.fire("Error!", "Failed to submit refund request.", "error");
     },
   });
 
-  const handleRefundRequest = (id) => {
-    refundMutation.mutate(id);
+  const handleDeleteDonation = (id) => {
+    Swal.fire({
+      title: "Are you wanted to refund?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleRefund(id);
+        deleteMutation.mutate(id);
+      }
+    });
   };
 
   const columns = [
@@ -69,7 +100,7 @@ const MyDonations = () => {
     },
     {
       header: "Actions",
-      cell: ({ row }) => {
+      cell: ({ row }) => (
         row.original.isRefundRequested ? (
           <Chip variant="outlined" color="red" value="Refund Requested" />
         ) : (
@@ -77,13 +108,13 @@ const MyDonations = () => {
             <Button
               size="sm"
               color="red"
-              onClick={() => handleRefundRequest(row.original._id)}
+              onClick={() => handleDeleteDonation(row.original._id)}
             >
               Ask for Refund
             </Button>
           </Tooltip>
         )
-      }
+      )
     },
   ]
 
