@@ -1,7 +1,7 @@
 
 # 🐾 **Pet Haven - Pet Adoption Platform**  
 
-![Pet Haven Screenshot](https://your-image-url.com)  
+![Pet Haven Screenshot](https://i.ibb.co/bMFJqDsc/Screenshot-2025-02-05-192137.png)
 
 Welcome to **Pet Haven**, a **MERN Stack** platform that helps connect pet lovers with pets in need of a forever home. Our mission is to make pet adoption easier and more accessible through technology.  
 
@@ -96,7 +96,7 @@ Welcome to **Pet Haven**, a **MERN Stack** platform that helps connect pet lover
 
 ### **1️⃣ Clone the Repository**  
 ```bash
-https://github.com/Semanto-35/paw-haven-client.git
+ git clone https://github.com/Semanto-35/paw-haven-client.git
 cd pet-haven
 ```
 
