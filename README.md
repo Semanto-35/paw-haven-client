@@ -1,7 +1,7 @@
 
 # 🐾 **Pet Haven - Pet Adoption Platform**  
 
-![Pet Haven Screenshot](https://i.ibb.co/bMFJqDsc/Screenshot-2025-02-05-192137.png)
+![Pet Haven Screenshot](https://i.ibb.co/MyXvzNRf/Screenshot-2025-02-05-193349.png)
 
 Welcome to **Pet Haven**, a **MERN Stack** platform that helps connect pet lovers with pets in need of a forever home. Our mission is to make pet adoption easier and more accessible through technology.  
 
