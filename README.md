@@ -9,7 +9,6 @@ Welcome to **Pet Haven**, a **MERN Stack** platform that helps connect pet lover
 
 ## 🌍 **Live Demo**  
 🔗 **Live Website:** [Pet Haven Live](https://paw-haven-39454.web.app/)  
-🔗 **API Documentation:** [Pet Haven API Docs](https://api-docs-url.com)  
 
 ---
 
@@ -97,7 +96,7 @@ Welcome to **Pet Haven**, a **MERN Stack** platform that helps connect pet lover
 
 ### **1️⃣ Clone the Repository**  
 ```bash
-git clone https://github.com/yourgithub/pet-haven.git
+https://github.com/Semanto-35/paw-haven-client.git
 cd pet-haven
 ```
 
@@ -136,14 +135,13 @@ npm run dev
 ```
 
 ### **5️⃣ Open in Browser**  
-Visit `http://localhost:3000` to view the project. 🚀  
+Visit `http://localhost:5173` to view the project. 🚀  
 
 ---
 
 ## 🔗 **Live Project & Resources**  
 🔗 **Live Demo:** [Pet Haven Live](https://paw-haven-39454.web.app/)  
-📄 **API Documentation:** [Pet Haven API Docs](https://api-docs-url.com)  
-📂 **GitHub Repository:** [Pet Haven Repo](https://github.com/yourgithub/pet-haven)  
+📂 **GitHub Repository:** [Pet Haven Repo](https://github.com/Semanto-35/paw-haven-client) 
 
 ---
 
