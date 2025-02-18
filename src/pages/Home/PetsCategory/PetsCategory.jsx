@@ -1,12 +1,16 @@
 import { Card, CardBody, CardHeader, Typography } from "@material-tailwind/react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import {Pagination, Navigation} from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from "@heroicons/react/24/outline";
 
 
 const PetsCategory = () => {
+  const navigate = useNavigate();
+
   const categories = [
     { "id": 1, "name": "Cats", "image": "https://i.ibb.co.com/YFYD5hRK/2133.jpg" },
     { "id": 2, "name": "Dogs", "image": "https://i.ibb.co.com/BMPWmGQ/27259.jpg" },
@@ -16,25 +20,38 @@ const PetsCategory = () => {
   ]
 
   return (
-    <div className="max-w-screen-2xl mx-auto py-16 px-4">
+    <section className="max-w-screen-2xl mx-auto py-16 px-4 relative">
+      {/* title */}
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold  mb-4">Explore Pet Categories</h2>
-        <p className="text-lg max-w-3xl mx-auto">Find the perfect pet for you</p>
+        <motion.h2
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-3xl md:text-4xl font-bold  mb-3"
+        >
+          Browse by Pet Category
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="md:text-lg max-w-3xl mx-auto"
+        >
+          Choose a category to find your perfect pet.
+        </motion.p>
       </div>
+
+      {/* carousel */}
       <Swiper
         slidesPerView={2}
         spaceBetween={24}
         loop
-        navigation
-        pagination={{
-          clickable: true,
-        }}
-        style={{
-          '--swiper-navigation-color': '#2f27ce',
-          '--swiper-pagination-color': '#2f27ce',
+        navigation={{
+          nextEl: ".custom-next",
+          prevEl: ".custom-prev",
         }}
         autoplay={{
-          delay: 4000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         breakpoints={{
@@ -51,30 +68,47 @@ const PetsCategory = () => {
             spaceBetween: 24,
           },
         }}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation]}
         className="w-full h-full"
       >
-        <div className="">
+        <div>
           {categories.map((category) => (
             <SwiperSlide key={category.id} >
-              <Card className="relative group overflow-hidden bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-md rounded-lg hover:shadow-lg transition duration-300 cursor-pointer mb-12"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: category.id * 0.2 }}
               >
-                <CardHeader floated={false} className="h-48 rounded-full">
-                  <img src={category.image} alt="profile-picture"
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
-                  />
-                </CardHeader>
-                <CardBody className="text-center">
-                  <Typography variant="h4"  className="mb-2 group-hover:text-deep-orange-500 transition-transform duration-300 ">
-                    {category.name}
-                  </Typography>
-                </CardBody>
-              </Card>
+                <Card className="relative group overflow-hidden bg-white dark:bg-blue-gray-700 text-black dark:text-blue-gray-100 shadow-md rounded-lg hover:shadow-lg transition duration-300 cursor-pointer mb-12"
+                  onClick={() => navigate(`/pets`)}
+                >
+                  <CardHeader floated={false} className="h-48">
+                    <img src={category.image} alt="profile-picture"
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </CardHeader>
+                  <CardBody className="text-center">
+                    <Typography variant="h4" className="mb-2 group-hover:text-pink-500 transition-transform duration-300 ">
+                      {category.name}
+                    </Typography>
+                  </CardBody>
+                </Card>
+              </motion.div>
             </SwiperSlide>
           ))}
         </div>
       </Swiper>
-    </div>
+
+      {/* Custom Navigation Buttons */}
+      <div className="absolute bottom-16 z-50 left-1/2 -translate-x-1/2 flex gap-4">
+        <button className="custom-prev p-2 rounded-full bg-pink-500 text-white hover:bg-pink-600 transition">
+          <ArrowLongLeftIcon className="w-6" />
+        </button>
+        <button className="custom-next p-2 rounded-full bg-pink-500 text-white hover:bg-pink-600 transition">
+          <ArrowLongRightIcon className="w-6" />
+        </button>
+      </div>
+    </section >
   );
 };
 

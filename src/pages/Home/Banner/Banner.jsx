@@ -1,47 +1,57 @@
 import { Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+const navigate = useNavigate();
+
   return (
-    <section className="relative max-w-7xl mx-auto w-full h-[500px] bg-blue-100 flex items-center justify-center">
-      <img
-        src="https://i.ibb.co.com/YBqx2rXh/2148345913.jpg"
-        alt="Banner"
-        className="absolute w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-black/30"></div>
-      <div className="relative text-center text-white">
-        <motion.h2 className="font-bold text-4xl"
-          initial={{ y: 150, opacity: 0 }}
-          whileInView={{
-            y: 0, opacity: 1, transition: { duration: 1.2, delay: 0.2, ease: 'easeOut' }
-          }}
-          viewport={{ once: true }}
-        >
-          Welcome to Pet Haven
-        </motion.h2>
-        <motion.p className="mt-4 text-lg font-medium"
-          initial={{ y: 150, opacity: 0 }}
-          whileInView={{
-            y: 0, opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: 'easeOut' }
-          }}
-          viewport={{ once: true }}
-        >
-          Your journey to finding a loving companion starts here.
-        </motion.p>
-        <motion.div
-          initial={{ y: 150, opacity: 0 }}
-          whileInView={{
-            y: 0, opacity: 1, transition: { duration: 1.2, delay: 0.9, ease: 'easeOut' }
-          }}
-          viewport={{ once: true }}
-        >
-          <Link to={'/pets'}>
-            <Button className="mt-6" color="blue" size="lg">
+    <section className="w-full h-full py-6 mt-[72px] mb-10">
+      <div className="max-w-screen-2xl mx-auto flex items-center justify-center flex-col-reverse md:flex-row gap-10 px-4">
+
+        {/* Left Side: Text */}
+        <div>
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .8, delay: .6, ease: "easeOut" }}
+            className="text-4xl lg:text-6xl font-bold leading-tight"
+          >
+            Find Your <span className="text-pink-400">Perfect Companion</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .8, delay: .9, ease: "easeOut" }}
+            className="text-lg dark:text-gray-300 mt-3"
+          >
+            Adopt a pet today and give them the love and home they deserve.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .9, delay: 1.2, ease: "easeOut" }}
+            className="mt-6"
+          >
+            <Button
+            onClick={()=>navigate('/pets')}
+              color="pink"
+              size="lg"
+              className=" shadow-lg"
+            >
               Explore Pets
             </Button>
-          </Link>
+          </motion.div>
+        </div>
+
+        {/* Right Side: Image */}
+        <motion.div
+          className="w-full sm:h-[350px] md:h-[400px] lg:h-[450px]"
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
+        >
+          <img src="https://i.ibb.co.com/Z6gPVdQW/bgImg.png" alt="Pet Adoption" className="w-full h-full object-contain" />
         </motion.div>
       </div>
     </section>
