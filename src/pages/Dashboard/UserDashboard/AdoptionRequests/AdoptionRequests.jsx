@@ -150,7 +150,7 @@ const AdoptionRequests = () => {
               <tbody>
                 {table.getRowModel().rows.length > 0 ? (
                   table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-gray-100 even:bg-gray-50">
+                    <tr key={row.id} className="hover:bg-gray-100 even:bg-gray-50 dark:hover:bg-blue-gray-500 dark:even:bg-blue-gray-400">
                       {row.getVisibleCells().map((cell) => (
                         <td key={cell.id} className="px-4 py-2 text-center border text-sm">
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
