@@ -165,7 +165,7 @@ const AllDonations = () => {
 
   return (
     <div className="p-4">
-      <Card>
+      <Card className="bg-orange-50 p-4">
         <Typography variant="h3" className="text-center mb-6">
           Manage All Campaigns
         </Typography>

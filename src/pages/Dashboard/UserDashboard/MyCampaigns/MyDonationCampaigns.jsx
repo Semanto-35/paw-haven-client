@@ -142,7 +142,7 @@ const MyDonationCampaigns = () => {
 
   return (
     <div className="p-4">
-      <Card>
+      <Card className="py-4 bg-green-50">
         <Typography variant="h3" className="text-center mb-6">
           My Donation Campaigns
         </Typography>

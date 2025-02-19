@@ -78,8 +78,8 @@ const EditDonation = () => {
 
   return (
     <Card className="max-w-2xl mx-auto p-4 shadow-lg">
-      <Typography variant="h3" className="text-center mb-6 text-teal-600">
-        Update {campaignData?.petName}&apos;s Donation Campaign
+      <Typography variant="h3" className="text-center mb-6">
+        Update <span className="text-teal-600">{campaignData?.petName}&apos;</span>s Donation Campaign
       </Typography>
 
       <CardBody>

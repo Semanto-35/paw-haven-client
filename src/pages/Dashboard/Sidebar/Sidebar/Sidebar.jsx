@@ -20,6 +20,7 @@ import {
   HeartIcon,
   CurrencyDollarIcon,
   PowerIcon,
+  BookOpenIcon,
 } from "@heroicons/react/24/solid";
 import {
   Bars3Icon,
@@ -28,6 +29,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useRole from "../../../../hooks/useRole";
+import DarkModeToggle from "../../../../components/shared/DarkMode/DarkModeToggle";
 
 
 
@@ -43,7 +45,7 @@ const Sidebar = () => {
     <div>
       <div className={`md:fixed top-0 p-4 left-0 h-full shadow-lg bg-white dark:bg-blue-gray-100 absolute inset-y-0 transition-transform duration-300 ease-in-out transform ${isDrawerOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 z-10 overflow-y-auto`}
       >
-        <div className="px-8 py-4 rounded-lg bg-brown-300 dark:bg-gray-700 dark:text-gray-100 flex flex-col items-center">
+        <div className="px-8 py-4 rounded-lg bg-pink-50 dark:bg-gray-700 dark:text-gray-100 flex flex-col items-center">
           <Typography variant="h6">
             Welcome {user?.displayName.split(" ")[0]}
           </Typography>
@@ -60,10 +62,11 @@ const Sidebar = () => {
             <KeyIcon className="w-4 h-4" /> {role}
           </Typography>
           <Link to={'/'}>
-            <Button variant="text" color="white" className="mt-2">
+            <Button variant="text" className="mt-2">
               back to home
             </Button>
           </Link>
+          <DarkModeToggle />
         </div>
         <List>
           <NavLink
@@ -71,7 +74,23 @@ const Sidebar = () => {
             end
             className={({ isActive }) =>
               isActive
-                ? " text-blue-500 font-medium"
+                ? " text-pink-500 font-medium"
+                : " text-gray-600"
+            }
+          >
+            <ListItem>
+              <ListItemPrefix>
+                <BookOpenIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Overview
+            </ListItem>
+          </NavLink>
+          <NavLink
+            to="/dashboard/my-pets"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? " text-pink-500 font-medium"
                 : " text-gray-600"
             }
           >
@@ -86,7 +105,7 @@ const Sidebar = () => {
             to="/dashboard/add-pet"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-500 font-medium"
+                ? "text-pink-500 font-medium"
                 : "text-gray-600"
             }
           >
@@ -101,7 +120,7 @@ const Sidebar = () => {
             to="/dashboard/adoption-requests"
             className={({ isActive }) =>
               isActive
-                ? " text-blue-500 font-medium"
+                ? " text-pink-500 font-medium"
                 : " text-gray-600"
             }
           >
@@ -116,7 +135,7 @@ const Sidebar = () => {
             to="/dashboard/create-donation"
             className={({ isActive }) =>
               isActive
-                ? " text-blue-500 font-medium"
+                ? " text-pink-500 font-medium"
                 : " text-gray-600"
             }
           >
@@ -131,7 +150,7 @@ const Sidebar = () => {
             to="/dashboard/my-donation-campaigns"
             className={({ isActive }) =>
               isActive
-                ? " text-blue-500 font-medium"
+                ? " text-pink-500 font-medium"
                 : " text-gray-600"
             }
           >
@@ -146,7 +165,7 @@ const Sidebar = () => {
             to="/dashboard/my-donations"
             className={({ isActive }) =>
               isActive
-                ? " text-blue-500 font-medium"
+                ? " text-pink-500 font-medium"
                 : " text-gray-600"
             }
           >
@@ -165,7 +184,7 @@ const Sidebar = () => {
                   to="admin/manage-users"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-blue-500 font-medium"
+                      ? "text-pink-500 font-medium"
                       : "text-gray-600"
                   }
                 >
@@ -180,7 +199,7 @@ const Sidebar = () => {
                   to="admin/all-pets"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-blue-500 font-medium"
+                      ? "text-pink-500 font-medium"
                       : "text-gray-600"
                   }
                 >
@@ -195,7 +214,7 @@ const Sidebar = () => {
                   to="admin/all-donations"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-blue-500 font-medium"
+                      ? "text-pink-500 font-medium"
                       : "text-gray-600"
                   }
                 >
@@ -206,7 +225,7 @@ const Sidebar = () => {
                     All Donations
                   </ListItem>
                 </NavLink>
-                <hr className="my-2 border-blue-gray-300" />
+                <hr className="my-2 border-pink-gray-300" />
               </>
             )
           }
@@ -215,7 +234,7 @@ const Sidebar = () => {
               to="/dashboard/profile"
               className={({ isActive }) =>
                 isActive
-                  ? " text-blue-500 font-medium"
+                  ? " text-pink-500 font-medium"
                   : " text-gray-600"
               }
             >
@@ -226,7 +245,7 @@ const Sidebar = () => {
                 Profile
               </ListItem>
             </NavLink>
-            <ListItem onClick={logOut} className="text-red-600 bg-red-500/10">
+            <ListItem onClick={logOut} className="text-red-600 bg-red-500/10 mt-2">
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>

@@ -121,7 +121,7 @@ const ManageUsers = () => {
 
   return (
     <div className="p-4">
-      <Card>
+      <Card className="p-4 bg-cyan-50">
         <Typography variant="h3" className="text-center mb-6">
           Manage All Users
         </Typography>

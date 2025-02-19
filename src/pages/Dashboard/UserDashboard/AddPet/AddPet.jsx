@@ -85,7 +85,7 @@ const AddPetForm = () => {
         });
         toast.success("Pet added successfully!");
         formik.resetForm();
-        navigate('/dashboard')
+        navigate('/dashboard/my-pets')
       } catch (error) {
         console.error("Error adding pet:", error);
         toast.error("An error occurred while adding the pet.");
@@ -97,8 +97,8 @@ const AddPetForm = () => {
 
   return (
     <div className="p-4">
-      <Card className="max-w-3xl mx-auto shadow-lg">
-        <Typography variant="h3" className="text-center mb-2">
+      <Card className="max-w-3xl mx-auto shadow-lg bg-blue-50 p-4">
+        <Typography color="teal" variant="h3" className="text-center mb-2">
           Add a Pet
         </Typography>
         <Typography variant="paragraph" className="text-center mb-4">
@@ -234,7 +234,7 @@ const AddPetForm = () => {
 
             <Button
               type="submit"
-              color="blue"
+              color="teal"
               className="w-full"
               disabled={formik.isSubmitting}
             >

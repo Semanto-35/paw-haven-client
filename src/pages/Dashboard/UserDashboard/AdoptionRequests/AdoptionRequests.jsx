@@ -122,7 +122,7 @@ const AdoptionRequests = () => {
 
   return (
     <div className="p-4">
-      <Card>
+      <Card className="py-4 dark:bg-blue-gray-700 dark:text-white">
         <Typography variant="h4" className="text-center mb-6">
           Adoption Requests
         </Typography>
@@ -131,7 +131,7 @@ const AdoptionRequests = () => {
             <table className="w-full table-auto  border">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id} className="bg-gray-200">
+                  <tr key={headerGroup.id} className="bg-gray-200 dark:bg-gray-700">
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
@@ -162,7 +162,7 @@ const AdoptionRequests = () => {
                   <tr>
                     <td
                       colSpan={table.getVisibleFlatColumns().length}
-                      className="text-center py-4 text-gray-500"
+                      className="text-center py-4"
                     >
                       No adoption requests yet.
                     </td>
@@ -176,7 +176,8 @@ const AdoptionRequests = () => {
               onClick={table.previousPage}
               disabled={!table.getCanPreviousPage()}
               size="sm"
-              variant="outlined"
+              color="teal"
+              variant="filled"
             >
               Previous
             </Button>
@@ -188,7 +189,8 @@ const AdoptionRequests = () => {
               onClick={table.nextPage}
               disabled={!table.getCanNextPage()}
               size="sm"
-              variant="outlined"
+              color="teal"
+              variant="ofilled"
             >
               Next
             </Button>

@@ -61,7 +61,7 @@ const CreateDonationCampaign = () => {
 
   return (
     <div className="p-4">
-      <Card className="max-w-2xl mx-auto shadow-lg">
+      <Card className="max-w-2xl mx-auto shadow-lg py-4  bg-blue-gray-50">
         <Typography variant="h3" className="text-center mb-6 text-teal-600">
           Create Donation Campaign
         </Typography>

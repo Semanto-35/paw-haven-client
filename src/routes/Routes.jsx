@@ -22,6 +22,8 @@ import AllDonations from "../pages/Dashboard/AdminDashboard/AllDonatoins/AllDona
 import PetDetails from "../pages/PetDetails/PetDetails";
 import DonationCampaigns from "../pages/DonationCampaigns/DonationCampaigns";
 import DonationDetails from "../pages/DonationDetails/DonationDetails";
+import Overview from "../pages/Dashboard/UserDashboard/Overview/Overview";
+import Profile from "../pages/Dashboard/Profile/Profile";
 
 
 
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard',
+        element: <PrivateRoute><Overview /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/profile',
+        element: <PrivateRoute><Profile /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/my-pets',
         element: <PrivateRoute><MyAddedpets /></PrivateRoute>
       },
       {

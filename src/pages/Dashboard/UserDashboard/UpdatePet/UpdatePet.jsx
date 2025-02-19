@@ -97,7 +97,7 @@ const UpdatePet = () => {
         await axiosSecure.put(`/update-pet/${id}`, updateData);
         toast.success("Pet updated successfully!");
         formik.resetForm();
-        navigate('/dashboard')
+        navigate('/dashboard/my-pets')
       } catch (error) {
         console.error("Error adding pet:", error);
         toast.error("An error occurred while adding the pet.");
@@ -113,9 +113,9 @@ const UpdatePet = () => {
 
   return (
     <div className="p-4">
-      <Card className="max-w-3xl mx-auto shadow-lg">
+      <Card className="max-w-3xl mx-auto py-4 shadow-lg bg-blue-50">
         <Typography variant="h3" className="text-center mb-2">
-          Give <span className="text-orange-600">{petData.petName}</span> a Update
+          Give <span className="text-orange-500">{petData.petName}</span> a Update
         </Typography>
         <Typography variant="paragraph" className="text-center mb-4">
           Help me to be adopted by giving it&apos;s updated details below.
@@ -250,7 +250,7 @@ const UpdatePet = () => {
 
             <Button
               type="submit"
-              color="blue"
+              color="orange"
               className="w-full"
               disabled={formik.isSubmitting}
             >

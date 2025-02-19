@@ -172,7 +172,7 @@ const AllPets = () => {
 
   return (
     <div className="p-4">
-      <Card>
+      <Card className="p-4 bg-orange-50">
         <Typography variant="h3" className="mb-6 text-center">
           Manage All Pets
         </Typography>
