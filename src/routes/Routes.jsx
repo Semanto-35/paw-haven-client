@@ -24,6 +24,7 @@ import DonationCampaigns from "../pages/DonationCampaigns/DonationCampaigns";
 import DonationDetails from "../pages/DonationDetails/DonationDetails";
 import Overview from "../pages/Dashboard/UserDashboard/Overview/Overview";
 import Profile from "../pages/Dashboard/Profile/Profile";
+import Contact from "../pages/Contact/Contact";
 
 
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: '/campaigns/:id',
         element: <DonationDetails />
+      },
+      {
+        path: '/contact',
+        element: <Contact />
       },
     ]
   },

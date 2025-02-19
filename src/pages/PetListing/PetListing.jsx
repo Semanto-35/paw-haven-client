@@ -18,7 +18,7 @@ const PetListing = () => {
   const { ref, inView } = useInView();
 
   const fetchPets = async ({ pageParam = 1 }) => {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/pets?page=${pageParam}&limit=9&search=${searchName}&category=${category}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/pets?page=${pageParam}&limit=9&search=${searchName}&category=${category}&sortByAge=${sortByAge}`);
 
     return response.data;
   };
@@ -116,7 +116,7 @@ const PetListing = () => {
           ? renderSkeletons(9)
           : data?.pages.map((page) =>
             page.pets.map((pet) => (
-              <Card key={pet._id} className="w-full shadow-lg dark:bg-gray-700 dark:text-gray-100">
+              <Card key={pet._id} className="w-full shadow-lg h-full dark:bg-gray-700 dark:text-gray-100">
                 <CardHeader floated={false} color="blue-gray">
                   <motion.img
                     src={pet.petImage}
@@ -125,7 +125,7 @@ const PetListing = () => {
                     whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}
                   />
                 </CardHeader>
-                <CardBody>
+                <CardBody className="flex-grow">
                   <div className="mb-3 flex items-center justify-between">
                     <Typography variant="h4" className="font-medium">
                       {pet.petName}
@@ -141,6 +141,11 @@ const PetListing = () => {
                   >
                     <MapPinIcon className="w-6 h-6" />
                     {pet.petLocation}
+                  </Typography>
+                  <Typography
+                    className="font-normal mt-2"
+                  >
+                    {pet.shortDescription}
                   </Typography>
                 </CardBody>
                 <CardFooter className="pt-3">
