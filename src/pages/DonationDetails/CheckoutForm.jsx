@@ -5,15 +5,16 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Input } from "@material-tailwind/react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
-const CheckoutForm = ({ campaigns, closeModal}) => {
+const CheckoutForm = ({ campaigns, closeModal }) => {
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
-  console.log(campaigns);
   const formik = useFormik({
     initialValues: {
       donatedAmount: "",
@@ -72,10 +73,10 @@ const CheckoutForm = ({ campaigns, closeModal}) => {
             donorEmail: user?.email,
             donorName: user?.displayName,
           });
-          await axiosSecure.patch(`/donated-camp/${campaigns._id}`,{totalDonation});
+          await axiosSecure.patch(`/donated-camp/${campaigns._id}`, { totalDonation });
 
           closeModal();
-
+          navigate("/donations")
           Swal.fire("Success!", `You have successfully donated $${values.donatedAmount} to ${campaigns?.petName}`, "success");
         }
       } catch (err) {

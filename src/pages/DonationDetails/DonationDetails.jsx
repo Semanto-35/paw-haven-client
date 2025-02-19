@@ -12,7 +12,7 @@ import CheckoutForm from "./CheckoutForm";
 
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
-console.log(stripePromise);
+
 
 const DonationDetails = () => {
 
@@ -50,8 +50,8 @@ const DonationDetails = () => {
 
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 py-16">
-      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-none  dark:bg-gray-700 dark:text-gray-100">
+    <div className="max-w-screen-2xl mx-auto px-4 mt-[72px] py-16">
+      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-lg pb-0 dark:bg-blue-gray-700 dark:text-blue-gray-100">
         <CardHeader
           shadow={false}
           floated={false}
@@ -65,10 +65,10 @@ const DonationDetails = () => {
         </CardHeader>
         <CardBody>
           <Typography variant="h2" >
-            Meet <span className="text-orange-600">{petName}</span>
+            Meet <span className="text-pink-500">{petName}</span>
           </Typography>
           <Typography variant="paragraph"  className="mb-6">
-            Added By <span className="text-orange-600">{addedBy}</span>
+            Added By <span className="text-pink-500">{addedBy}</span>
           </Typography>
 
           <div className=" mb-4">
@@ -113,7 +113,7 @@ const DonationDetails = () => {
         </Typography>
         <div className="my-16 space-y-6">
           {recommandedCampaigns?.length > 0 ? recommandedCampaigns?.map((camp) => (
-            <Card shadow={false} key={camp._id} className="w-full flex-col lg:flex-row gap-12 rounded-none bg-gray-200">
+            <Card shadow={false} key={camp._id} className="w-full flex-col lg:flex-row gap-12 rounded-xl bg-gray-200">
               <CardHeader
                 shadow={false}
                 floated={false}
@@ -122,12 +122,12 @@ const DonationDetails = () => {
                 <img
                   src={camp.petImage}
                   alt="card-image"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover rounded-lg"
                 />
               </CardHeader>
               <CardBody>
                 <Typography variant="h2" color="blue-gray" className="mb-6">
-                  Meet <span className="text-orange-600">{camp.petName}</span>
+                  Meet <span className="text-pink-600">{camp.petName}</span>
                 </Typography>
 
                 <div className=" mb-4">
@@ -143,7 +143,7 @@ const DonationDetails = () => {
                 </Typography>
 
                 <Link to={`/campaigns/${camp._id}`}>
-                  <Button size="md">
+                  <Button color="green" size="md">
                     view details
                   </Button>
                 </Link>

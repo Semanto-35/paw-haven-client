@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 const PetListing = () => {
   const [searchName, setSearchName] = useState("");
   const [category, setCategory] = useState("");
+  const [sortByAge, setSortByAge] = useState("");
   const { ref, inView } = useInView();
 
   const fetchPets = async ({ pageParam = 1 }) => {
@@ -62,7 +63,7 @@ const PetListing = () => {
 
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4  dark:bg-gray-900 dark:text-gray-100">
+    <div className="max-w-screen-2xl mt-[72px] mx-auto px-4 py-16">
       <div className="py-8 text-center">
         <Typography variant="h2" >
           Adopt Your New Best Friend
@@ -70,7 +71,7 @@ const PetListing = () => {
       </div>
 
       <div className="flex flex-wrap justify-center items-center mt-6 gap-4">
-        <div className="">
+        <div>
           <Input
             type="text"
             label="Search by name..."
@@ -78,7 +79,7 @@ const PetListing = () => {
             onChange={(e) => setSearchName(e.target.value)}
             icon={<MagnifyingGlassIcon />} />
         </div>
-        <div className="">
+        <div>
           <Select
             label="Select"
             value={category}
@@ -92,10 +93,23 @@ const PetListing = () => {
             <Option value="Fish">Fish</Option>
           </Select>
         </div>
+        <div>
+          <Select label="Sort By Age" value={sortByAge} onChange={(value) =>  setSortByAge(value)}>
+            <Option value="">Sort By</Option>
+            <Option value="ageAsc">Youngest First</Option>
+            <Option value="ageDesc">Oldest First</Option>
+          </Select>
+        </div>
         <Button color="blue-gray" variant="filled"
           onClick={() => refetch()}
         >search</Button>
       </div>
+
+      {data?.pages[0]?.pets.length === 0 && !isLoading && (
+        <Typography variant="h5" className="text-center mt-6">
+          No pets found. Try a different search or category.
+        </Typography>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-12">
         {isLoading
@@ -113,7 +127,7 @@ const PetListing = () => {
                 </CardHeader>
                 <CardBody>
                   <div className="mb-3 flex items-center justify-between">
-                    <Typography variant="h4"  className="font-medium">
+                    <Typography variant="h4" className="font-medium">
                       {pet.petName}
                     </Typography>
                     <Typography
@@ -123,7 +137,6 @@ const PetListing = () => {
                     </Typography>
                   </div>
                   <Typography
-                    
                     className="flex items-center gap-1.5 font-normal"
                   >
                     <MapPinIcon className="w-6 h-6" />
@@ -132,7 +145,7 @@ const PetListing = () => {
                 </CardBody>
                 <CardFooter className="pt-3">
                   <Link to={`/pets/${pet._id}`}>
-                    <Button size="md" color="blue" fullWidth>
+                    <Button size="md" color="pink" fullWidth>
                       see details
                     </Button>
                   </Link>

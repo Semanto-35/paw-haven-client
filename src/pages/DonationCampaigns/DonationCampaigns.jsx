@@ -39,8 +39,8 @@ const DonationCampaigns = () => {
 
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 py-12 ">
-      <div className="my-8 text-center">
+    <div className="max-w-screen-2xl mx-auto px-4 py-12 mt-[72px]">
+      <div className="mb-8 text-center">
         <Typography variant="h2" >
           Donation Campaigns
         </Typography>
@@ -49,7 +49,7 @@ const DonationCampaigns = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {data?.pages.map((page) =>
           page.campaigns.map((campaign) => (
-            <Card key={campaign._id} className="shadow-md rounded-lg w-full dark:bg-gray-800 dark:text-gray-100">
+            <Card key={campaign._id} className="shadow-md rounded-lg w-full dark:bg-blue-gray-800 dark:text-blue-gray-100">
               <CardHeader floated={false} >
                 <img
                   src={campaign.petImage}
@@ -73,7 +73,7 @@ const DonationCampaigns = () => {
 
               <CardFooter className="pt-3">
                 <Link to={`/campaigns/${campaign._id}`}>
-                  <Button size="md" color="blue" fullWidth>
+                  <Button size="md" color="pink" fullWidth>
                     view details
                   </Button>
                 </Link>

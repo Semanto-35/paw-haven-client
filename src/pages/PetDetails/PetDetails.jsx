@@ -70,25 +70,25 @@ const PetDetails = () => {
 
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 py-16">
-      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-none dark:bg-gray-700 dark:text-gray-100">
+    <div className="max-w-screen-2xl mx-auto px-4 py-16 mt-[72px]">
+      <Card shadow={false} className="w-full flex-col lg:flex-row gap-8 rounded-md dark:bg-blue-gray-700 dark:text-blue-gray-100">
         <CardHeader
           shadow={false}
           floated={false}
-          className="m-0 lg:w-1/2 shrink-0"
+          className="m-0 lg:w-1/2 shrink-0 "
         >
           <img
             src={petImage}
             alt="card-image"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover rounded-md"
           />
         </CardHeader>
         <CardBody>
           <Typography variant="h2">
-            Meet <span className="text-orange-600">{petName}</span>
+            Meet <span className="text-pink-400">{petName}</span>
           </Typography>
           <Typography variant="paragraph"  className="mb-6">
-            Added By <span className="text-orange-600">{addedBy}</span>
+            Added By <span className="text-pink-400">{addedBy}</span>
           </Typography>
           <div className="grid grid-cols-2 justify-between lg:gap-12 mb-4">
             <div>
@@ -124,12 +124,12 @@ const PetDetails = () => {
         </CardBody>
       </Card>
 
-      <div className=" space-y-4 my-10 p-4">
+      <div className=" space-y-4 my-10 py-4">
         <Typography variant="h3" >
-          More About <span >{petName}</span>
+          More About <span className="text-pink-400">{petName}</span>
         </Typography>
         <Typography>
-          {longDescription} Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, quibusdam voluptatem excepturi, ab labore reprehenderit ipsam quas consequatur quod reiciendis tempore beatae asperiores delectus, quam consectetur quidem adipisci odit. Ipsa reprehenderit porro corporis cupiditate, rerum numquam recusandae laboriosam, hic tempore earum qui ducimus dignissimos eos deserunt quaerat perspiciatis iste praesentium voluptates dolores illum nemo excepturi est blanditiis! Corporis doloribus quae inventore ipsum?
+          {longDescription}
         </Typography>
       </div>
       <div className="border space-y-4 my-10 p-10 rounded-xl bg-deep-orange-50">
@@ -141,10 +141,10 @@ const PetDetails = () => {
         </Typography>
       </div>
 
-      <Dialog size="sm" open={open} className="p-4">
+      <Dialog size="sm" open={open} className="p-4 dark:bg-blue-gray-900 dark:text-blue-gray-100 text-black bg-white">
         <DialogHeader className="relative m-0 block">
-          <Typography variant="h3" color="blue-gray">
-            Adopt <span className="text-amber-600">{petName}</span>
+          <Typography variant="h3" className="dark:text-blue-gray-100">
+            Adopt <span className="text-pink-500">{petName}</span>
           </Typography>
           <Typography className="mt-1 font-normal text-gray-600">
             Keep your records up-to-date and organized.
@@ -152,7 +152,7 @@ const PetDetails = () => {
           <IconButton
             size="sm"
             variant="text"
-            className="!absolute right-3.5 top-3.5"
+            className="!absolute right-3.5 top-3.5 dark:text-blue-gray-100 text-black"
             onClick={closeModal}
           >
             <XMarkIcon className="h-6 w-6 stroke-2" />
@@ -213,8 +213,8 @@ const PetDetails = () => {
             <DialogFooter>
               <Button
                 type="submit"
-                variant="gradient"
-                color="orange"
+                variant="filled"
+                color="pink"
                 disabled={formik.isSubmitting}
               >
                 {formik.isSubmitting ? "Submiting" : "Submit Adoption Request"}
@@ -223,7 +223,6 @@ const PetDetails = () => {
           </form>
         </DialogBody>
       </Dialog>
-
     </div>
   );
 };
