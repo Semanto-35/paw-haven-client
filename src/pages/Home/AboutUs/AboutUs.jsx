@@ -1,80 +1,74 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
-
+import { motion } from "framer-motion";
+import { InformationCircleIcon, LightBulbIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 
 const AboutUs = () => {
   return (
-    <section className="max-w-screen-2xl mx-auto py-16 px-4">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold  mb-4">About Us</h2>
-        <p className="text-lg  max-w-3xl mx-auto">
-          We are dedicated to connecting pets with loving homes. Our platform
-          ensures a safe and easy adoption process, helping over 500 pets find
-          their forever families.
-        </p>
+    <section id="about" className="py-16">
+      <div className="max-w-5xl mx-auto text-center px-4">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="text-3xl md:text-4xl font-bold"
+        >
+          About Our Platform
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="text-lg dark:text-gray-400 mt-4"
+        >
+          Our mission is to connect people with pets in need, making adoption easier, safer, and more accessible. 
+          We provide a simple way for pet lovers to find their perfect companion while supporting animal welfare organizations.
+        </motion.p>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div>
-          <h3 className="text-2xl font-semibold  mb-2">
-            Our Mission
-          </h3>
-          <p className=" mb-6">
-            We aim to create a world where every pet has a loving home. Our
-            platform bridges the gap between pet lovers and pets in need,
-            making it easier to adopt, foster, or donate to animal shelters.
+
+      {/* Key Features */}
+      <div className="mt-12 grid gap-8 md:grid-cols-3 max-w-screen-2xl mx-auto px-4">
+        {/* Feature 1 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+          className="p-6 bg-white dark:bg-blue-gray-700 rounded-lg shadow-lg text-center"
+        >
+          <InformationCircleIcon className="w-12 h-12 mx-auto text-blue-500" />
+          <h3 className="text-xl font-semibold mt-4">How It Works</h3>
+          <p className="mt-2">
+            Browse pets, learn about their needs, and connect with verified shelters or adopters.
           </p>
-          <ul className="space-y-4">
-            <li className="flex items-start">
-              <span className="bg-teal-500 text-white w-8 h-8 flex items-center justify-center rounded-full font-bold mr-4">1</span>
-              <p className="">
-                Ensure safe and reliable pet adoptions.
-              </p>
-            </li>
-            <li className="flex items-start">
-              <span className="bg-teal-500 text-white w-8 h-8 flex items-center justify-center rounded-full font-bold mr-4">2</span>
-              <p className="">Connect loving families with pets in need.</p>
-            </li>
-            <li className="flex items-start">
-              <span className="bg-teal-500 text-white w-8 h-8 flex items-center justify-center rounded-full font-bold mr-4">3</span>
-              <p className="">Promote verified and ethical adoptions.</p>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={20}
-            autoplay={{ delay: 2500 }}
-            navigation
-            loop
-            modules={[Navigation]}
-            className="w-full h-96 rounded-lg shadow-lg overflow-hidden"
-          >
-            <SwiperSlide>
-              <img
-                src="https://i.ibb.co.com/5KWRV77/dog-1.jpg"
-                alt="Happy Owner and Pet"
-                className="w-full h-full object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src="https://i.ibb.co.com/5nQ4sh4/dog-2.jpg"
-                alt="Adopted Dog"
-                className="w-full h-full object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src="https://i.ibb.co.com/5nQ4sh4/dog-2.jpg"
-                alt="Adopted Cat"
-                className="w-full h-full object-cover"
-              />
-            </SwiperSlide>
-          </Swiper>
-        </div>
+        </motion.div>
+
+        {/* Feature 2 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
+          className="p-6 bg-white dark:bg-blue-gray-700 rounded-lg shadow-lg text-center"
+        >
+          <LightBulbIcon className="w-12 h-12 mx-auto text-yellow-500" />
+          <h3 className="text-xl font-semibold mt-4">Why We Built This</h3>
+          <p className="mt-2">
+            Many pets need a second chance. We created this platform to give every pet the opportunity to find a loving home.
+          </p>
+        </motion.div>
+
+        {/* Feature 3 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.7, ease: "easeOut" }}
+          className="p-6 bg-white dark:bg-blue-gray-700 rounded-lg shadow-lg text-center"
+        >
+          <GlobeAltIcon className="w-12 h-12 mx-auto text-green-500" />
+          <h3 className="text-xl font-semibold mt-4">Join Our Community</h3>
+          <p className="mt-2">
+            Become a part of a caring community that values pet welfare and responsible adoption.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

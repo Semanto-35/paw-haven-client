@@ -59,6 +59,18 @@ const NavbarComponent = () => {
           <span>Donation Campaigns</span>
         </NavLink>
       </Typography>
+
+      <Typography as="li" variant="small" className="p-1 font-normal">
+        <NavLink
+          to="contact"
+          className={({ isActive }) =>
+            `flex items-center gap-2 ${isActive && "text-pink-500 font-semibold"} hover:text-pink-500`
+          }
+        >
+          <WalletIcon className='w-4 h-4' />
+          <span>Contact</span>
+        </NavLink>
+      </Typography>
     </ul>
   );
 

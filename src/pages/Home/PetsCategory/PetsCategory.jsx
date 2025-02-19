@@ -100,7 +100,7 @@ const PetsCategory = () => {
       </Swiper>
 
       {/* Custom Navigation Buttons */}
-      <div className="absolute bottom-16 z-50 left-1/2 -translate-x-1/2 flex gap-4">
+      <div className="absolute bottom-16 z-10 left-1/2 -translate-x-1/2 flex gap-4">
         <button className="custom-prev p-2 rounded-full bg-pink-500 text-white hover:bg-pink-600 transition">
           <ArrowLongLeftIcon className="w-6" />
         </button>

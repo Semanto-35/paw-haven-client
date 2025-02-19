@@ -25,8 +25,8 @@ const Footer = () => {
 
 
   return (
-    <footer className="relative dark:bg-gray-900 dark:text-gray-100 w-full py-16">
-      <div className="mx-auto w-full max-w-7xl px-8">
+    <div className="relative dark:bg-black dark:text-blue-gray-100 w-full py-16">
+      <div className="w-full max-w-screen-2xl mx-auto px-4">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Typography variant="h5" className="mb-6">
             Paw Haven
@@ -36,7 +36,7 @@ const Footer = () => {
               <ul key={title}>
                 <Typography
                   variant="small"
-                  className="mb-3 font-medium opacity-40"
+                  className="mb-3 font-medium opacity-60"
                 >
                   {title}
                 </Typography>
@@ -45,8 +45,7 @@ const Footer = () => {
                     <Typography
                       as="a"
                       href="#"
-                      color="gray"
-                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                      className="py-1.5 font-normal transition-colors hover:text-pink-400"
                     >
                       {link}
                     </Typography>
@@ -64,7 +63,7 @@ const Footer = () => {
             &copy; {currentYear} <a href="https://material-tailwind.com/">Paw Haven</a>. All
             Rights Reserved.
           </Typography>
-          <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
+          <div className="flex gap-4 sm:justify-center">
             <Typography as="a" href="#" className="opacity-80 transition-opacity hover:opacity-100">
               <img className="h-5 w-5" src={facebook} alt="" />
             </Typography>
@@ -74,7 +73,7 @@ const Footer = () => {
             <Typography as="a" href="#" className="opacity-90 transition-opacity hover:opacity-100">
             <img className="h-5 w-5" src={twitter} alt="" />
             </Typography>
-            <Typography as="a" href="#" className="opacity-80 transition-opacity hover:opacity-100">
+            <Typography as="a" href="#" className="opacity-90 transition-opacity hover:opacity-100">
             <img className="h-5 w-5" src={github} alt="" />
             </Typography>
             <Typography as="a" href="#" className="opacity-80 transition-opacity hover:opacity-100">
@@ -83,7 +82,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 
