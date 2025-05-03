@@ -27,7 +27,7 @@ const Banner = () => {
             className="text-lg md:text-xl text-blue-gray-600 dark:text-blue-gray-300 mt-4 mb-6"
           >
             Adopt a pet today and give them the loving home they deserve. 
-            <span className="block mt-2 flex items-center gap-1">
+            <span className="flex items-center gap-1">
               <HeartIcon className="w-5 h-5 text-amber-500" /> 
               Every adoption saves a life
             </span>

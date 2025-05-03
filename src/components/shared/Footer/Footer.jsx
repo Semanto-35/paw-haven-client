@@ -57,7 +57,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative w-full bg-blue-gray-50 dark:bg-blue-gray-900 text-blue-gray-800 dark:text-blue-gray-200 py-12"> 
+    <footer className="relative w-full bg-white dark:bg-blue-gray-800 text-blue-gray-800 dark:text-blue-gray-200 py-12"> 
       <div className="w-full max-w-screen-2xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12"> 
           <div className="space-y-4">

@@ -20,7 +20,7 @@ const FeaturedPets = () => {
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-blue-gray-50 dark:bg-blue-gray-900">
+      <section className="py-16 bg-blue-gray-50 dark:bg-blue-gray-900">
         <div className="max-w-screen-2xl mx-auto px-4">
           <div className="text-center mb-12">
             <Typography
@@ -74,7 +74,7 @@ const FeaturedPets = () => {
   
   if (error) {
     return (
-      <section className="py-20 bg-blue-gray-50 dark:bg-blue-gray-900">
+      <section className="py-16 bg-blue-gray-50 dark:bg-blue-gray-900">
         <div className="max-w-screen-2xl mx-auto px-4 text-center">
           <Typography 
             variant="paragraph" 
@@ -88,7 +88,7 @@ const FeaturedPets = () => {
   }
 
   return (
-    <section className="py-20 bg-blue-gray-50 dark:bg-blue-gray-900">
+    <section className="py-16 bg-blue-gray-50 dark:bg-blue-gray-900">
       <div className="max-w-screen-2xl mx-auto px-4">
         <div className="text-center mb-12">
           <Typography 

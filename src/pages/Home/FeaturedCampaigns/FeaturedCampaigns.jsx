@@ -17,7 +17,7 @@ export default function FeaturedCampaigns() {
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-blue-gray-50 dark:bg-blue-gray-900">
+      <section className="py-16 bg-blue-gray-50 dark:bg-blue-gray-900">
         <div className="max-w-screen-2xl mx-auto px-4">
           <div className="text-center mb-16">
             <Typography variant="h2" className="text-3xl md:text-4xl font-bold mb-4 text-blue-gray-800 dark:text-white">
@@ -50,7 +50,7 @@ export default function FeaturedCampaigns() {
 
   if (error) {
     return (
-      <section className="py-20 bg-blue-gray-50 dark:bg-blue-gray-900">
+      <section className="py-16 bg-blue-gray-50 dark:bg-blue-gray-900">
         <div className="max-w-screen-2xl mx-auto px-4">
           <div className="text-center mb-16">
             <Typography variant="h2" className="text-3xl md:text-4xl font-bold mb-4 text-blue-gray-800 dark:text-white">
