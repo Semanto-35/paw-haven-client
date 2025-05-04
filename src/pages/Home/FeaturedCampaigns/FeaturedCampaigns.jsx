@@ -10,7 +10,7 @@ export default function FeaturedCampaigns() {
   const { data: campaigns, isLoading, error } = useQuery({
     queryKey: ['donationCampaigns'],
     queryFn: async () => {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/all-campaigns`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/featuredCampaigns`);
       return response.data;
     }
   });

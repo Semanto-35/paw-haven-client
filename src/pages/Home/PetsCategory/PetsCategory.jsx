@@ -96,7 +96,7 @@ const PetCategory = () => {
               <Button
                 variant="text"
                 className="w-full h-full p-4 flex flex-col items-center justify-center bg-white dark:bg-blue-gray-800 shadow-md hover:shadow-lg rounded-xl transition-all duration-300 group"
-                onClick={() => navigate(`/pets?category=${category.slug || category.name.toLowerCase()}`)}
+                onClick={() => navigate(`/pets?category=${category.name}`)}
               >
                 <div className="w-16 h-16 mb-3 flex items-center justify-center bg-blue-gray-100 dark:bg-blue-gray-700 rounded-full group-hover:bg-amber-100 dark:group-hover:bg-amber-900/30 transition-colors duration-300">
                   {category.icon ? (
